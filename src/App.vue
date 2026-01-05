@@ -540,30 +540,39 @@ li {
 }
 
 @media (max-width: 768px) {
-  /* 让列表横向排列 */
-  .footer-section ul {
-    display: flex;           /* 横向排列 */
-    flex-wrap: nowrap;       /* 不换行，可横向滚动 */
+  /* footer-top 三个 section 横向排列 */
+  .footer-top {
+    display: flex;           /* 整体横向排列 */
+    flex-direction: row;     
+    flex-wrap: nowrap;       /* 不换行 */
     overflow-x: auto;        /* 超出可滚动 */
-    gap: 15px;               /* 列表间距 */
-    padding-left: 0;         /* 移除默认缩进 */
+    gap: 20px;               /* section 间距 */
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+  }
+
+  /* 每个 section 固定宽度，纵向排列 li */
+  .footer-section {
+    flex: 0 0 200px;         /* 每个 section 固定宽度，也可以用百分比 flex: 0 0 30%; */
+    text-align: left;        /* 内部文字左对齐 */
+    display: flex;
+    flex-direction: column;  /* section 内纵向排列 */
+    gap: 10px;
+    padding: 10px 0;
+  }
+
+  /* 列表内部 li 纵向排列 */
+  .footer-section ul {
+    display: flex;
+    flex-direction: column;  /* li 纵向排列 */
+    gap: 5px;                /* li 间距 */
+    padding-left: 0;
+    margin: 0;
+    list-style: none;
   }
 
   .footer-section ul li {
-    flex: 0 0 auto;          /* 保持宽度不压缩 */
-    white-space: nowrap;      /* 不换行显示文字 */
-  }
-
-  /* 滚动条美化（可选） */
-  .footer-section ul::-webkit-scrollbar {
-    height: 6px;
-  }
-  .footer-section ul::-webkit-scrollbar-thumb {
-    background: rgba(0,0,0,0.2);
-    border-radius: 3px;
-  }
-  .footer-section ul::-webkit-scrollbar-track {
-    background: rgba(0,0,0,0.05);
+    white-space: normal;     /* 文本自动换行 */
   }
 }
 </style>
