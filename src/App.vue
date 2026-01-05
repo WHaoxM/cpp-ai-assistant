@@ -1,118 +1,54 @@
 <template>
   <div class="app-container" :style="{ backgroundImage: `url(${backgroundImage})` }">
-    <!-- 顶部导航栏 -->
     <el-header class="app-header">
       <div class="header-content">
         <div class="logo">
-          <h1>C++ AI 题库助手</h1>
+          <h1>C++ AI 题库</h1>
         </div>
-        <el-menu
-          mode="horizontal"
-          :default-active="activeMenu"
-          class="top-menu"
-          router
-        >
-          <el-menu-item index="/">
-            <el-icon><Document /></el-icon>
-            <span>题库列表</span>
-          </el-menu-item>
-          <el-menu-item index="/ai-chat">
-            <el-icon><ChatDotRound /></el-icon>
-            <span>AI 聊天</span>
-          </el-menu-item>
-          <el-menu-item index="/model-training">
-            <el-icon><MagicStick /></el-icon>
-            <span>模型训练</span>
-          </el-menu-item>
-          <el-menu-item index="/custom-models">
-            <el-icon><Management /></el-icon>
-            <span>自定义模型</span>
-          </el-menu-item>
-          <el-menu-item index="/api-config">
-            <el-icon><Setting /></el-icon>
-            <span>API配置</span>
-          </el-menu-item>
-          <el-menu-item index="/online-ai-models">
-            <el-icon><Grid /></el-icon>
-            <span>在线AI模型</span>
-          </el-menu-item>
+        <el-menu mode="horizontal" :default-active="activeMenu" class="top-menu pc-only" router>
+          <el-menu-item index="/">题库列表</el-menu-item>
+          <el-menu-item index="/ai-chat">AI 聊天</el-menu-item>
+          <el-menu-item index="/model-training">模型训练</el-menu-item>
+          <el-menu-item index="/api-config">API配置</el-menu-item>
         </el-menu>
       </div>
     </el-header>
     
-    <!-- 主内容区域 -->
-  <el-main class="app-main">
-  <div class="content-wrapper">
-    <router-view />
-    <div class="empty-decoration">
-      <div class="decoration-text">专注 C++ 进阶提升</div>
-    </div>
-  </div>
-</el-main>
-    <div class="mobile-tab-bar">
-  <div class="tab-item" :class="{active: activeMenu === '/'}" @click="$router.push('/')">
-    <el-icon><Document /></el-icon>
-    <span>题库</span>
-  </div>
-  <div class="tab-item" :class="{active: activeMenu === '/ai-chat'}" @click="$router.push('/ai-chat')">
-    <el-icon><ChatDotRound /></el-icon>
-    <span>AI聊天</span>
-  </div>
-  <div class="tab-item" :class="{active: activeMenu === '/model-training'}" @click="$router.push('/model-training')">
-    <el-icon><MagicStick /></el-icon>
-    <span>训练</span>
-  </div>
-  <div class="tab-item" :class="{active: activeMenu === '/api-config'}" @click="$router.push('/api-config')">
-    <el-icon><Setting /></el-icon>
-    <span>设置</span>
-  </div>
-</div>
-
-    <!-- 底部信息 -->
-    <el-footer class="app-footer">
-      <div class="footer-content">
-        <div class="footer-top">
-          <div class="footer-section">
-            <h4>产品</h4>
-            <ul>
-              <li><a href="/">题库列表</a></li>
-              <li><a href="/ai-chat">AI 聊天</a></li>
-              <li><a href="/model-training">模型训练</a></li>
-              <li><a href="/docs/index.html">小白指南</a></li>
-            </ul>
-          </div>
-          <div class="footer-section">
-            <h4>服务</h4>
-            <ul>
-              <li><a href="/custom-models">自定义模型</a></li>
-              <li><a href="/api-config">API 配置</a></li>
-              <li><a href="/online-ai-models">在线 AI 模型</a></li>
-            </ul>
-          </div>
-          <div class="footer-section">
-            <h4>关于我</h4>
-            <ul>
-              <li>C++ AI 题库助手</li>
-              <li>个人项目</li>
-              <li>助力高效学习 C++</li>
-            </ul>
-          </div>
-        </div>
-        <div class="footer-bottom">
-          <p>&copy; 2026 C++ AI 题库助手. 版权所有 | 帮助您高效复习 C++ 知识</p>
-          <div class="footer-links">
-            <a href="#" @click.prevent="showPrivacy">隐私政策</a>
-            <span class="divider">|</span>
-            <a href="#" @click.prevent="showTerms">使用条款</a>
-          </div>
+    <el-main class="app-main">
+      <div class="content-wrapper">
+        <router-view />
+        <div class="empty-decoration">
+          <div class="decoration-icon"></div>
+          <p>专注 C++ 进阶提升</p>
         </div>
       </div>
-    </el-footer>
+    </el-main>
+
+    <nav class="mobile-tab-bar">
+      <div class="tab-item" :class="{active: activeMenu === '/'}" @click="$router.push('/')">
+        <el-icon><Document /></el-icon><span>题库</span>
+      </div>
+      <div class="tab-item" :class="{active: activeMenu === '/ai-chat'}" @click="$router.push('/ai-chat')">
+        <el-icon><ChatDotRound /></el-icon><span>AI聊天</span>
+      </div>
+      <div class="tab-item" :class="{active: activeMenu === '/model-training'}" @click="$router.push('/model-training')">
+        <el-icon><MagicStick /></el-icon><span>训练</span>
+      </div>
+      <div class="tab-item" :class="{active: activeMenu === '/api-config'}" @click="$router.push('/api-config')">
+        <el-icon><Setting /></el-icon><span>设置</span>
+      </div>
+    </nav>
     
-    <!-- 悬浮AI聊天组件 -->
+    <el-footer class="app-footer pc-only">
+      <div class="footer-bottom">
+        <p>&copy; 2026 C++ AI 题库助手</p>
+      </div>
+    </el-footer>
+
     <FloatingAIChat ref="floatingChat" @question-selected="handleQuestionSelected" />
   </div>
 </template>
+
 
 <script>
 import { ref, computed, onMounted } from 'vue'
@@ -186,7 +122,7 @@ export default {
 }
 </script>
 <style>
-/* --- 1. 全局基础重构 --- */
+/* --- 1. 移动端优先与防溢出重置 --- */
 * {
   margin: 0;
   padding: 0;
@@ -195,172 +131,164 @@ export default {
 
 :root {
   --app-primary: #1890ff;
-  --glass-bg: rgba(255, 255, 255, 0.85);
+  --glass-bg: rgba(255, 255, 255, 0.82);
   --glass-border: rgba(255, 255, 255, 0.4);
-  --tab-bar-height: 65px;
 }
 
 html, body {
   width: 100%;
   height: 100%;
-  overflow-x: hidden;
-  -webkit-text-size-adjust: 100%; /* 防止移动端旋转时字体缩放 */
+  /* 解决移动端左右晃动的关键 */
+  overflow-x: hidden; 
+  -webkit-font-smoothing: antialiased;
 }
 
-/* --- 2. 容器修复 --- */
 .app-container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  width: 100vw;
+  width: 100%;
+  /* 防止子元素（如表格）撑破容器 */
+  overflow-x: hidden; 
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: scroll; /* 移动端scroll性能更好，避开缩放Bug */
+  background-attachment: scroll; 
 }
 
-/* --- 3. 头部 --- */
+/* --- 2. 头部：移动端大幅收缩 --- */
 .app-header {
+  height: 54px !important;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--glass-border);
   position: sticky;
   top: 0;
   z-index: 1000;
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(15px);
-  border-bottom: 1px solid var(--glass-border);
-  height: 60px !important;
 }
 
 .header-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 15px;
+  display: flex;
+  align-items: center;
   height: 100%;
 }
 
-/* --- 4. 主内容与装饰位 (核心修复) --- */
+.logo h1 {
+  font-size: 16px; /* 解决标题过大挡住视野 */
+  font-weight: bold;
+  color: var(--app-primary);
+  white-space: nowrap;
+}
+
+/* --- 3. 主内容：实现小程序般的容器感 --- */
 .app-main {
-  flex: 1; /* 撑开垂直空间 */
+  flex: 1;
+  padding: 12px 0 80px 0; /* 底部留出TabBar空间 */
   display: flex;
   flex-direction: column;
-  padding: 20px 0;
 }
 
 .content-wrapper {
-  flex: 1; 
+  flex: 1;
+  margin: 0 12px;
+  padding: 16px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(15px);
+  border-radius: 12px;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  min-height: calc(100vh - 160px);
   display: flex;
   flex-direction: column;
-  position: relative; /* 为装饰图定位 */
-  margin: 0 16px 20px 16px;
-  background: var(--glass-bg);
-  backdrop-filter: blur(10px);
-  border-radius: 16px;
-  padding: 24px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
-  min-height: 70vh;
-  z-index: 1;
+  /* 确保内部长内容不撑开父级 */
+  overflow: hidden; 
 }
 
-/* 装饰性占位图样式 */
-.empty-decoration {
-  position: absolute;
-  bottom: 40px;
-  right: 20px;
-  width: 150px;
-  height: 150px;
-  opacity: 0.1; /* 淡淡的底纹感 */
-  pointer-events: none; /* 不挡住点击 */
-  z-index: -1;
-  background-image: url('https://cdn-icons-png.flaticon.com/512/2103/2103633.png'); /* 这是一个代码相关的Icon，你可以换成自己的 */
-  background-size: contain;
-  background-repeat: no-repeat;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-}
-
-.decoration-text {
-  font-size: 12px;
-  color: #000;
-  white-space: nowrap;
-  transform: translateY(20px);
-}
-
-/* --- 5. 移动端 TabBar --- */
+/* --- 4. 移动端底部 TabBar --- */
 .mobile-tab-bar {
-  display: none;
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(0,0,0,0.05);
+  z-index: 2000;
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
+.tab-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #909399;
+  font-size: 11px;
+}
+
+.tab-item .el-icon {
+  font-size: 20px;
+  margin-bottom: 2px;
+}
+
+.tab-item.active {
+  color: var(--app-primary);
+  font-weight: bold;
+}
+
+/* --- 5. 装饰位与响应式修正 --- */
+.empty-decoration {
+  margin-top: auto;
+  padding-top: 40px;
+  text-align: center;
+  opacity: 0.3;
+}
+
+.empty-decoration p {
+  font-size: 12px;
+  color: #666;
+}
+
+/* 隐藏PC端的各种元素 */
 @media (max-width: 768px) {
-  .top-menu { display: none !important; }
-  .header-content { justify-content: center; }
-
-  .app-main {
-    padding: 10px 0 80px 0; /* 为底部TabBar留位 */
+  .pc-only {
+    display: none !important;
   }
 
-  .content-wrapper {
-    margin: 0 12px;
-    padding: 16px;
-    min-height: calc(100vh - 180px); /* 确保背景撑满屏幕 */
+  /* 核心：修复截图中“题目助手”四个大字挡住视野 */
+  /* 假设你在子页面有 h1 或 h2 */
+  .app-main h1, .app-main h2 {
+    font-size: 20px !important;
+    margin-bottom: 12px !important;
+    text-align: center;
   }
 
-  .mobile-tab-bar {
-    display: flex;
-    position: fixed;
-    bottom: 0; left: 0; right: 0;
-    height: var(--tab-bar-height);
-    background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(20px);
-    border-top: 1px solid rgba(0, 0, 0, 0.05);
-    justify-content: space-around;
-    align-items: center;
-    z-index: 2000;
-    padding-bottom: env(safe-area-inset-bottom);
-  }
-
-  .tab-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: #8e8e93;
-    font: 10px/1.5 inherit;
-  }
-
-  .tab-item.active { color: var(--app-primary); }
-  
-  .app-footer {
-    padding: 20px 0 120px 0 !important; /* 彻底移除移动端页脚的视觉负担 */
-    background: transparent;
+  /* 修复表格溢出（最重要！） */
+  .el-table {
+    font-size: 12px !important;
   }
   
-  .footer-top { display: none !important; }
+  .el-table__body-wrapper, .el-table__header-wrapper {
+    overflow-x: auto !important; /* 允许表格内部横向滚动，而非全屏缩放 */
+  }
+
+  /* 搜索表单在移动端改为单列 */
+  .el-form--inline .el-form-item {
+    display: block !important;
+    margin-right: 0 !important;
+  }
 }
 
-/* --- 6. PC版底部 --- */
+/* PC 端隐藏移动端组件 */
 @media (min-width: 769px) {
-  .app-footer {
-    background: #fff;
-    padding: 40px 0 20px;
-    margin-top: auto;
-    border-top: 1px solid #eee;
-  }
-  
-  .footer-top {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    max-width: 1200px;
-    margin: 0 auto 30px;
+  .mobile-tab-bar {
+    display: none !important;
   }
 }
 
-/* --- 7. Element Plus 修正 --- */
-.el-table {
-  background-color: transparent !important;
-}
-.el-table tr, .el-table th {
-  background-color: transparent !important;
-}
 </style>
