@@ -197,26 +197,21 @@ export default {
   --tab-bar-height: 65px;
 }
 
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
-  color: #333;
-  -webkit-font-smoothing: antialiased;
-  background-color: #f0f2f5;
-  line-height: 1.6;
+html, body {
+  width: 100%;
+  overflow-x: hidden;
+  height: 100%;
 }
+
 
 /* --- 2. 容器与背景 --- */
 .app-container {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  width: 100%;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  transition: background-image 0.5s ease-in-out;
-}
+  min-height: 100vh; /* 保证容器至少和屏幕一样高 */
+  width: 100vw;
+  background-attachment: scroll; /* 移动端背景不固定，防止某些浏览器渲染Bug */
+
 
 /* --- 3. 头部导航 (响应式) --- */
 .app-header {
@@ -248,26 +243,42 @@ body {
   letter-spacing: -0.5px;
 }
 
-/* --- 4. 主内容区域 --- */
+/* 主区域自适应高度 */
 .app-main {
   flex: 1;
-  padding: 20px 0;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .content-wrapper {
-  background: var(--glass-bg);
+  flex: 1; /* 题目少时也会撑开背景 */
+  margin: 0 12px 20px 12px;
+  background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(10px);
   border-radius: 16px;
-  padding: 24px;
-  margin: 0 20px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-  border: 1px solid var(--glass-border);
-  min-height: 60vh;
+  min-height: 70vh; /* 保证视觉重心平衡 */
 }
-
+/* 移动端搜索区域优化 */
+@media (max-width: 768px) {
+  /* 让搜索框和按钮自适应换行，不要并排硬挤 */
+  .filter-card .el-form-item {
+    margin-right: 0;
+    margin-bottom: 10px;
+    width: 100%;
+  }
+  
+  .el-header {
+    height: 50px !important;
+  }
+  
+  .logo h1 {
+    font-size: 16px;
+  }
+  /* 底部精简，不要留大片空白页脚 */
+  .app-footer {
+    padding: 20px 0 100px 0 !important;
+  }
+}
 /* --- 5. PC版底部 (大屏显示) --- */
 .app-footer {
   background: #fff;
