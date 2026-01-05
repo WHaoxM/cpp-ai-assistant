@@ -5,12 +5,7 @@
         <div class="logo">
           <h1>C++ AI 题库助手</h1>
         </div>
-        <el-menu
-          mode="horizontal"
-          :default-active="activeMenu"
-          class="top-menu pc-only"
-          router
-        >
+        <el-menu mode="horizontal" :default-active="activeMenu" class="top-menu pc-only" router>
           <el-menu-item index="/">题库列表</el-menu-item>
           <el-menu-item index="/ai-chat">AI 聊天</el-menu-item>
           <el-menu-item index="/model-training">模型训练</el-menu-item>
@@ -22,18 +17,15 @@
     <el-main class="app-main">
       <div class="content-wrapper">
         <router-view />
-        <div class="empty-decoration mobile-only">
-          <p>专注 C++ 进阶提升</p>
-        </div>
       </div>
     </el-main>
 
-    <nav class="mobile-tab-bar mobile-only">
+    <nav class="mobile-tab-bar">
       <div class="tab-item" :class="{active: activeMenu === '/'}" @click="$router.push('/')">
         <el-icon><Document /></el-icon><span>题库</span>
       </div>
       <div class="tab-item" :class="{active: activeMenu === '/ai-chat'}" @click="$router.push('/ai-chat')">
-        <el-icon><ChatDotRound /></el-icon><span>AI聊天</span>
+        <el-icon><ChatDotRound /></el-icon><span>聊天</span>
       </div>
       <div class="tab-item" :class="{active: activeMenu === '/model-training'}" @click="$router.push('/model-training')">
         <el-icon><MagicStick /></el-icon><span>训练</span>
@@ -43,15 +35,10 @@
       </div>
     </nav>
     
-    <el-footer class="app-footer pc-only">
-      <div class="footer-bottom">
-        <p>&copy; 2026 C++ AI 题库助手. 助力您高效复习</p>
-      </div>
-    </el-footer>
-    
     <FloatingAIChat ref="floatingChat" @question-selected="handleQuestionSelected" />
   </div>
 </template>
+
 
 
 
@@ -126,8 +113,9 @@ export default {
   }
 }
 </script>
+
 <style>
-/* --- 1. 基础重置：禁止全局横向溢出 --- */
+/* --- 1. 全局重置：彻底禁止横向晃动 --- */
 * {
   margin: 0;
   padding: 0;
@@ -137,12 +125,11 @@ export default {
 html, body {
   width: 100%;
   height: 100%;
-  /* 关键：禁止页面整体左右晃动，确保上下滑动顺畅 */
-  overflow-x: hidden; 
-  -webkit-overflow-scrolling: touch; /* iOS 滚动优化 */
+  overflow-x: hidden; /* 核心：防止左右出现黑边或空白 */
+  -webkit-text-size-adjust: 100%;
 }
 
-/* --- 2. 容器适配：PC丝滑，移动端固定宽度 --- */
+/* --- 2. 容器：锁定移动端分辨率感 --- */
 .app-container {
   display: flex;
   flex-direction: column;
@@ -150,103 +137,99 @@ html, body {
   width: 100vw;
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
-  /* PC端固定背景实现丝滑感，移动端改为滚动防止Bug */
-  background-attachment: fixed; 
+  background-attachment: fixed;
 }
 
-@media (max-width: 768px) {
-  .app-container {
-    background-attachment: scroll;
-  }
-}
-
-/* --- 3. 头部适配：缩小视野杀手 --- */
+/* --- 3. 头部适配 --- */
 .app-header {
+  height: 50px !important;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
   position: sticky;
   top: 0;
   z-index: 1000;
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(15px);
-  border-bottom: 1px solid rgba(255,255,255,0.3);
-  height: 50px !important; /* 缩小高度 */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
 }
 
 .logo h1 {
-  /* 使用 clamp 确保标题在手机上不会像截图里那么巨大 */
-  font-size: clamp(14px, 4vw, 18px); 
-  text-align: center;
-  line-height: 50px;
+  font-size: 16px;
   color: #1890ff;
+  font-weight: bold;
 }
 
-/* --- 4. 主区域：实现“完美拖动”的核心 --- */
+/* --- 4. 主区域：居中且占满 --- */
 .app-main {
   flex: 1;
-  padding: 10px 0 80px 0;
-  width: 100%;
+  padding: 10px 0 70px 0; /* 为底部留位 */
   display: flex;
   flex-direction: column;
+  align-items: center; /* 居中内容 */
 }
 
 .content-wrapper {
+  width: 94%; /* 移动端占满 94% 宽度，左右留一点点呼吸感 */
+  max-width: 1200px; /* PC端限制最大宽度 */
   flex: 1;
-  margin: 0 10px;
-  padding: 15px !important;
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(15px);
   border-radius: 12px;
-  /* 修复：即使题目少，也撑开高度，保证视觉平衡 */
-  min-height: calc(100vh - 160px); 
-  
-  /* 关键：锁定容器宽度，内部溢出则允许局部滚动 */
-  max-width: calc(100vw - 20px);
-  overflow: hidden; 
+  padding: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
   display: flex;
   flex-direction: column;
+  overflow: hidden; /* 关键：防止内部内容撑破容器 */
 }
 
-/* --- 5. 针对 Element Plus 表格的移动端“横向拖动”修复 --- */
-@media (max-width: 768px) {
-  /* 强制表格容器允许横向滚动 */
-  .el-table {
-    width: 100% !important;
-  }
+/* --- 5. 解决表格无法展示完全的问题 --- */
+/* 当表格太宽时，允许在卡片内部左右拖动，而不是整个页面拖动 */
+.el-table {
+  width: 100% !important;
+}
 
-  /* 使得表格内的所有列可以完整显示并通过拖动查看 */
-  .el-table__inner-wrapper {
-    overflow-x: auto !important; 
+.el-table__inner-wrapper {
+  overflow-x: auto !important; 
+}
+
+/* --- 6. 响应式显示切换 --- */
+@media (max-width: 768px) {
+  .pc-only {
+    display: none !important;
   }
   
-  /* 隐藏滚动条，但保留滚动功能（可选，美化界面） */
-  .el-table__inner-wrapper::-webkit-scrollbar {
-    display: none;
+  .app-container {
+    background-attachment: scroll; /* 移动端背景不固定，更顺滑 */
   }
 
-  /* 修复截图中的按钮挤压问题 */
-  .el-table .cell {
-    white-space: nowrap !important; /* 保证文字不折行 */
-    padding: 0 4px !important;
-  }
-
-  /* 调整子页面内标题大小 */
-  .content-wrapper h1, .content-wrapper h2 {
-    font-size: 18px !important;
-    margin: 10px 0 !important;
+  /* 调整标题在移动端的比例 */
+  .content-wrapper h1 {
+    font-size: 1.2rem !important;
+    text-align: center;
   }
 }
 
-/* --- 6. 底部导航栏（小程序感） --- */
+/* --- 7. 移动端底部 TabBar (始终显示) --- */
 .mobile-tab-bar {
+  display: flex;
   position: fixed;
-  bottom: 0; left: 0; right: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   height: 60px;
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
-  display: flex;
+  border-top: 1px solid rgba(0,0,0,0.05);
   z-index: 2000;
   padding-bottom: env(safe-area-inset-bottom);
-  border-top: 1px solid rgba(0,0,0,0.05);
 }
 
 .tab-item {
@@ -256,24 +239,22 @@ html, body {
   align-items: center;
   justify-content: center;
   color: #909399;
-  font-size: 10px;
+  font-size: 11px;
+}
+
+.tab-item .el-icon {
+  font-size: 20px;
+  margin-bottom: 2px;
 }
 
 .tab-item.active {
   color: #1890ff;
+  font-weight: bold;
 }
 
-/* --- 7. PC 端丝滑优化 --- */
 @media (min-width: 769px) {
-  .app-main {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 30px 0;
-  }
-  .content-wrapper {
-    margin: 0 20px;
-    padding: 30px !important;
+  .mobile-tab-bar {
+    display: none !important; /* PC端隐藏底部导航 */
   }
 }
-
 </style>
