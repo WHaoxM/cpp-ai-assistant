@@ -41,11 +41,14 @@
     </el-header>
     
     <!-- 主内容区域 -->
-    <el-main class="app-main">
-      <div class="content-wrapper">
-        <router-view />
-      </div>
-    </el-main>
+  <el-main class="app-main">
+  <div class="content-wrapper">
+    <router-view />
+    <div class="empty-decoration">
+      <div class="decoration-text">专注 C++ 进阶提升</div>
+    </div>
+  </div>
+</el-main>
     <div class="mobile-tab-bar">
   <div class="tab-item" :class="{active: activeMenu === '/'}" @click="$router.push('/')">
     <el-icon><Document /></el-icon>
@@ -183,7 +186,7 @@ export default {
 }
 </script>
 <style>
-/* --- 1. 全局基础重置 --- */
+/* --- 1. 全局基础重构 --- */
 * {
   margin: 0;
   padding: 0;
@@ -192,37 +195,39 @@ export default {
 
 :root {
   --app-primary: #1890ff;
-  --glass-bg: rgba(255, 255, 255, 0.75);
-  --glass-border: rgba(255, 255, 255, 0.3);
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --glass-border: rgba(255, 255, 255, 0.4);
   --tab-bar-height: 65px;
 }
 
 html, body {
   width: 100%;
-  overflow-x: hidden;
   height: 100%;
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%; /* 防止移动端旋转时字体缩放 */
 }
 
-
-/* --- 2. 容器与背景 --- */
+/* --- 2. 容器修复 --- */
 .app-container {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* 保证容器至少和屏幕一样高 */
+  min-height: 100vh;
   width: 100vw;
-  background-attachment: scroll; /* 移动端背景不固定，防止某些浏览器渲染Bug */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: scroll; /* 移动端scroll性能更好，避开缩放Bug */
+}
 
-
-/* --- 3. 头部导航 (响应式) --- */
+/* --- 3. 头部 --- */
 .app-header {
   position: sticky;
   top: 0;
   z-index: 1000;
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(15px);
   border-bottom: 1px solid var(--glass-border);
   height: 60px !important;
-  padding: 0 !important;
 }
 
 .header-content {
@@ -235,150 +240,77 @@ html, body {
   height: 100%;
 }
 
-.logo h1 {
-  font-size: 18px;
-  font-weight: 800;
-  color: var(--app-primary);
-  margin: 0;
-  letter-spacing: -0.5px;
-}
-
-/* 主区域自适应高度 */
+/* --- 4. 主内容与装饰位 (核心修复) --- */
 .app-main {
-  flex: 1;
+  flex: 1; /* 撑开垂直空间 */
   display: flex;
   flex-direction: column;
+  padding: 20px 0;
 }
 
 .content-wrapper {
-  flex: 1; /* 题目少时也会撑开背景 */
-  margin: 0 12px 20px 12px;
-  background: rgba(255, 255, 255, 0.8);
+  flex: 1; 
+  display: flex;
+  flex-direction: column;
+  position: relative; /* 为装饰图定位 */
+  margin: 0 16px 20px 16px;
+  background: var(--glass-bg);
   backdrop-filter: blur(10px);
   border-radius: 16px;
-  min-height: 70vh; /* 保证视觉重心平衡 */
-}
-/* 移动端搜索区域优化 */
-@media (max-width: 768px) {
-  /* 让搜索框和按钮自适应换行，不要并排硬挤 */
-  .filter-card .el-form-item {
-    margin-right: 0;
-    margin-bottom: 10px;
-    width: 100%;
-  }
-  
-  .el-header {
-    height: 50px !important;
-  }
-  
-  .logo h1 {
-    font-size: 16px;
-  }
-  /* 底部精简，不要留大片空白页脚 */
-  .app-footer {
-    padding: 20px 0 100px 0 !important;
-  }
-}
-/* --- 5. PC版底部 (大屏显示) --- */
-.app-footer {
-  background: #fff;
-  padding: 40px 0 20px 0 !important;
-  height: auto !important;
-  margin-top: 40px;
-  border-top: 1px solid #eee;
+  padding: 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+  min-height: 70vh;
+  z-index: 1;
 }
 
-.footer-top {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  max-width: 1200px;
-  margin: 0 auto 30px;
-  padding: 0 20px;
+/* 装饰性占位图样式 */
+.empty-decoration {
+  position: absolute;
+  bottom: 40px;
+  right: 20px;
+  width: 150px;
+  height: 150px;
+  opacity: 0.1; /* 淡淡的底纹感 */
+  pointer-events: none; /* 不挡住点击 */
+  z-index: -1;
+  background-image: url('https://cdn-icons-png.flaticon.com/512/2103/2103633.png'); /* 这是一个代码相关的Icon，你可以换成自己的 */
+  background-size: contain;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
 }
 
-.footer-section h4 {
-  font-size: 16px;
-  margin-bottom: 15px;
-  color: #333;
+.decoration-text {
+  font-size: 12px;
+  color: #000;
+  white-space: nowrap;
+  transform: translateY(20px);
 }
 
-.footer-section ul {
-  list-style: none;
-  padding: 0;
-}
-
-.footer-section ul li {
-  margin-bottom: 8px;
-  font-size: 14px;
-}
-
-.footer-section a {
-  color: #666;
-  transition: color 0.3s;
-}
-
-.footer-section a:hover {
-  color: var(--app-primary);
-}
-
-.footer-bottom {
-  border-top: 1px solid #f0f0f0;
-  padding-top: 20px;
-  text-align: center;
-  font-size: 13px;
-  color: #999;
-}
-
-/* --- 6. 移动端底部 TabBar (默认隐藏) --- */
+/* --- 5. 移动端 TabBar --- */
 .mobile-tab-bar {
   display: none;
 }
 
-/* --- 7. 移动端适配 (核心代码) --- */
 @media (max-width: 768px) {
-  /* 隐藏PC端导航，Logo居中 */
-  .top-menu {
-    display: none !important;
-  }
-  
-  .header-content {
-    justify-content: center;
-  }
+  .top-menu { display: none !important; }
+  .header-content { justify-content: center; }
 
-  /* 调整内容区域间距，防止被底部TabBar遮挡 */
   .app-main {
-    padding: 12px 0 80px 0; /* 底部留出 80px */
+    padding: 10px 0 80px 0; /* 为底部TabBar留位 */
   }
 
   .content-wrapper {
     margin: 0 12px;
     padding: 16px;
-    border-radius: 12px;
+    min-height: calc(100vh - 180px); /* 确保背景撑满屏幕 */
   }
 
-  /* 极简页脚：移动端不显示复杂链接，只显示版权 */
-  .footer-top {
-    display: none !important;
-  }
-
-  .app-footer {
-    background: transparent;
-    border: none;
-    margin-top: 0;
-    padding: 20px 0 100px 0 !important; /* 额外padding防止TabBar遮挡版权字 */
-  }
-
-  .footer-bottom {
-    border: none;
-  }
-
-  /* 显示底部导航栏 */
   .mobile-tab-bar {
     display: flex;
     position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    bottom: 0; left: 0; right: 0;
     height: var(--tab-bar-height);
     background: rgba(255, 255, 255, 0.9);
     backdrop-filter: blur(20px);
@@ -386,7 +318,7 @@ html, body {
     justify-content: space-around;
     align-items: center;
     z-index: 2000;
-    padding-bottom: env(safe-area-inset-bottom); /* 适配全面屏底部横条 */
+    padding-bottom: env(safe-area-inset-bottom);
   }
 
   .tab-item {
@@ -394,38 +326,41 @@ html, body {
     flex-direction: column;
     align-items: center;
     color: #8e8e93;
-    font-size: 10px;
-    flex: 1;
-    transition: all 0.2s;
+    font: 10px/1.5 inherit;
   }
 
-  .tab-item .el-icon {
-    font-size: 22px;
-    margin-bottom: 4px;
+  .tab-item.active { color: var(--app-primary); }
+  
+  .app-footer {
+    padding: 20px 0 120px 0 !important; /* 彻底移除移动端页脚的视觉负担 */
+    background: transparent;
   }
+  
+  .footer-top { display: none !important; }
+}
 
-  .tab-item.active {
-    color: var(--app-primary);
+/* --- 6. PC版底部 --- */
+@media (min-width: 769px) {
+  .app-footer {
+    background: #fff;
+    padding: 40px 0 20px;
+    margin-top: auto;
+    border-top: 1px solid #eee;
   }
-
-  /* 浮动AI按钮位置调整，防止遮挡TabBar */
-  .floating-ai-chat {
-    bottom: 85px !important;
-    right: 20px !important;
+  
+  .footer-top {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 1200px;
+    margin: 0 auto 30px;
   }
 }
 
-/* --- 8. Element Plus 组件美化 --- */
-.el-card {
-  border: none !important;
-  border-radius: 12px !important;
-  background: rgba(255, 255, 255, 0.6) !important;
-  backdrop-filter: blur(5px);
+/* --- 7. Element Plus 修正 --- */
+.el-table {
+  background-color: transparent !important;
 }
-
-.el-button--primary {
-  --el-button-bg-color: var(--app-primary);
-  border-radius: 8px;
+.el-table tr, .el-table th {
+  background-color: transparent !important;
 }
-
 </style>
