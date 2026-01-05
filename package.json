@@ -4,14 +4,12 @@
   "version": "1.0.0",
   "description": "C++ AI Assistant for practicing and learning C++",
   "type": "module",
-  "main": "server.js",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
     "dev:frontend": "vite",
-    "dev:backend": "nodemon server.js",
-    "start": "node server.js"
+    "dev:backend": "nodemon server.local.js"
   },
   "keywords": [
     "ai",
@@ -20,7 +18,6 @@
     "education",
     "assistant"
   ],
-  "author": "",
   "license": "ISC",
   "dependencies": {
     "axios": "^1.6.0",
