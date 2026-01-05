@@ -1,0 +1,17 @@
+node_modules
+.git
+.DS_Store
+*.log
+.env
+.env.local
+.env.*.local
+dist
+.trae
+error.txt
+docs
+api
+server.js
+api-routes.js
+deploy.bat
+deploy.sh
+deploy-github.bat
