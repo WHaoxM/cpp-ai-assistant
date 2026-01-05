@@ -46,7 +46,25 @@
         <router-view />
       </div>
     </el-main>
-    
+    <div class="mobile-tab-bar">
+  <div class="tab-item" :class="{active: activeMenu === '/'}" @click="$router.push('/')">
+    <el-icon><Document /></el-icon>
+    <span>题库</span>
+  </div>
+  <div class="tab-item" :class="{active: activeMenu === '/ai-chat'}" @click="$router.push('/ai-chat')">
+    <el-icon><ChatDotRound /></el-icon>
+    <span>AI聊天</span>
+  </div>
+  <div class="tab-item" :class="{active: activeMenu === '/model-training'}" @click="$router.push('/model-training')">
+    <el-icon><MagicStick /></el-icon>
+    <span>训练</span>
+  </div>
+  <div class="tab-item" :class="{active: activeMenu === '/api-config'}" @click="$router.push('/api-config')">
+    <el-icon><Setting /></el-icon>
+    <span>设置</span>
+  </div>
+</div>
+
     <!-- 底部信息 -->
     <el-footer class="app-footer">
       <div class="footer-content">
@@ -164,93 +182,30 @@ export default {
   }
 }
 </script>
-
 <style>
-/* 全局样式重置 */
+/* --- 1. 全局基础重置 --- */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+:root {
+  --app-primary: #1890ff;
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-border: rgba(255, 255, 255, 0.3);
+  --tab-bar-height: 65px;
+}
+
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
   color: #333;
-  font-smoothing: antialiased; /* 优化字体渲染 */
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: #f5f7fa;
-  font-size: 14px;
+  background-color: #f0f2f5;
   line-height: 1.6;
 }
 
-/* 统一标题样式 */
-h1 {
-  font-size: 28px;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 20px;
-  font-smoothing: antialiased;
-}
-
-h2 {
-  font-size: 24px;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 18px;
-  font-smoothing: antialiased;
-}
-
-h3 {
-  font-size: 20px;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 16px;
-  font-smoothing: antialiased;
-}
-
-h4 {
-  font-size: 16px;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 14px;
-  font-smoothing: antialiased;
-}
-
-/* 统一正文样式 */
-p {
-  font-size: 14px;
-  line-height: 1.6;
-  color: #333;
-  margin-bottom: 12px;
-}
-
-/* 统一链接样式 */
-a {
-  color: #1890ff;
-  text-decoration: none;
-  transition: color 0.3s;
-}
-
-a:hover {
-  color: #40a9ff;
-  text-decoration: underline;
-}
-
-/* 统一列表样式 */
-ul, ol {
-  padding-left: 20px;
-  margin-bottom: 12px;
-}
-
-li {
-  font-size: 14px;
-  line-height: 1.6;
-  color: #333;
-  margin-bottom: 8px;
-}
-
-/* 应用容器 */
+/* --- 2. 容器与背景 --- */
 .app-container {
   display: flex;
   flex-direction: column;
@@ -259,77 +214,20 @@ li {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-attachment: fixed; /* 背景图固定 */
-  backdrop-filter: blur(5px); /* 添加毛玻璃效果 */
+  background-attachment: fixed;
+  transition: background-image 0.5s ease-in-out;
 }
 
-/* 全局Element Plus组件透明度设置 */
-:root {
-  --el-card-background-color: rgba(255, 255, 255, 0.7);
-  --el-table-background-color: rgba(255, 255, 255, 0.7);
-}
-
-/* 卡片组件透明度 */
-.el-card, .is-hover-shadow, .filter-card {
-  background-color: rgba(255, 255, 255, 0.7) !important;
-  backdrop-filter: blur(5px);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1) !important;
-  border-color: rgba(232, 232, 232, 0.7) !important;
-}
-
-/* 表格组件透明度 */
-.el-table--fit, .el-table, .el-table--layout-fixed, .is-scrolling-none {
-  background-color: rgba(255, 255, 255, 0.7) !important;
-  backdrop-filter: blur(5px);
-  border-color: rgba(232, 232, 232, 0.7) !important;
-}
-
-/* 表格行透明度 */
-.el-table__body-wrapper {
-  background-color: rgba(255, 255, 255, 0.7) !important;
-}
-
-/* 表格表头透明度 */
-.el-table__header-wrapper {
-  background-color: rgba(240, 242, 245, 0.8) !important;
-}
-
-/* 表格单元格透明度 */
-.el-table__cell {
-  background-color: transparent !important;
-}
-
-/* 表单元素透明度 */
-.el-input__wrapper, .el-select__wrapper, .el-textarea__wrapper {
-  background-color: rgba(255, 255, 255, 0.7) !important;
-  backdrop-filter: blur(5px);
-}
-
-/* 按钮透明度 */
-.el-button {
-  background-color: rgba(24, 144, 255, 0.9) !important;
-  backdrop-filter: blur(5px);
-}
-
-/* 下拉菜单透明度 */
-.el-dropdown-menu {
-  background-color: rgba(255, 255, 255, 0.9) !important;
-  backdrop-filter: blur(5px);
-}
-
-/* 消息提示透明度 */
-.el-message-box {
-  background-color: rgba(255, 255, 255, 0.95) !important;
-  backdrop-filter: blur(5px);
-}
-
-/* 头部样式 */
+/* --- 3. 头部导航 (响应式) --- */
 .app-header {
-  background-color: rgba(255, 255, 255, 0.9); /* 90% 透明度，提高可读性 */
-  backdrop-filter: blur(5px); /* 添加毛玻璃效果 */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  z-index: 100;
-  border-bottom: 1px solid rgba(232, 232, 232, 0.7);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(15px);
+  border-bottom: 1px solid var(--glass-border);
+  height: 60px !important;
+  padding: 0 !important;
 }
 
 .header-content {
@@ -339,240 +237,184 @@ li {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
-  height: 60px;
+  height: 100%;
 }
 
 .logo h1 {
-  font-size: 20px;
-  font-weight: bold;
-  color: #1890ff;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--app-primary);
   margin: 0;
-  font-smoothing: antialiased; /* 优化字体渲染 */
+  letter-spacing: -0.5px;
 }
 
-.top-menu {
-  border-bottom: none;
-  height: 60px;
-  line-height: 60px;
-  background-color: transparent; /* 透明背景 */
-}
-
-/* 主内容区域 */
+/* --- 4. 主内容区域 --- */
 .app-main {
   flex: 1;
   padding: 20px 0;
-  max-width: 900px;
-  margin: 0 auto;
   width: 100%;
-  background-color: transparent; /* 透明背景 */
-}
-
-/* 内容包装器，设置70%透明度 */
-.content-wrapper {
-  background-color: rgba(255, 255, 255, 0.9); /* 70% 透明度 */
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(5px); /* 添加毛玻璃效果 */
-  min-height: calc(70vh - 40px);
-}
-
-/* 底部样式 */
-.app-footer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-shrink: 0;
-  width: 100%;
-  min-height: 200px;
-  background-color: rgba(255, 255, 255, 1.0);
-  backdrop-filter: blur(5px);
-  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
-  padding: 30px 0 20px 0;
-  text-align: center;
-  color: #666;
-  font-size: 14px;
-  margin-top: auto;
-  border-top: 1px solid rgba(255, 255, 255, 1);
-}
-
-.footer-content {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
+}
+
+.content-wrapper {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 24px;
+  margin: 0 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--glass-border);
+  min-height: 60vh;
+}
+
+/* --- 5. PC版底部 (大屏显示) --- */
+.app-footer {
+  background: #fff;
+  padding: 40px 0 20px 0 !important;
+  height: auto !important;
+  margin-top: 40px;
+  border-top: 1px solid #eee;
 }
 
 .footer-top {
-  display: flex;
-  justify-content: space-between;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #e4e7ed;
-  margin-bottom: 20px;
-}
-
-.footer-section {
-  flex: 1;
-  text-align: center;
-  padding: 40px 20px 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  max-width: 1200px;
+  margin: 0 auto 30px;
+  padding: 0 20px;
 }
 
 .footer-section h4 {
-  color: #333;
-  margin-bottom: 0px;
-  margin-top: 70px;
   font-size: 16px;
-  font-weight: 600;
+  margin-bottom: 15px;
+  color: #333;
 }
 
 .footer-section ul {
   list-style: none;
   padding: 0;
-  margin: 0;
 }
 
 .footer-section ul li {
-  padding: 4px 0;
-  line-height: 1.6;
+  margin-bottom: 8px;
+  font-size: 14px;
 }
 
 .footer-section a {
   color: #666;
-  text-decoration: none;
   transition: color 0.3s;
 }
 
 .footer-section a:hover {
-  color: #1890ff;
-  text-decoration: underline;
+  color: var(--app-primary);
 }
 
 .footer-bottom {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  padding-top: 10px;
-  border-top: 1px solid #e4e7ed;
-  gap: 20px;
-}
-
-.footer-bottom p {
-  margin: 5px 0;
+  border-top: 1px solid #f0f0f0;
+  padding-top: 20px;
   text-align: center;
-}
-
-.footer-links {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.footer-links .divider {
-  color: #ccc;
-}
-
-.footer-links a {
-  color: #666;
-  text-decoration: none;
   font-size: 13px;
-  transition: color 0.3s;
+  color: #999;
 }
 
-.footer-links a:hover {
-  color: #1890ff;
-  text-decoration: underline;
+/* --- 6. 移动端底部 TabBar (默认隐藏) --- */
+.mobile-tab-bar {
+  display: none;
 }
 
+/* --- 7. 移动端适配 (核心代码) --- */
 @media (max-width: 768px) {
-  .app-footer {
-    min-height: auto;
-    padding: 20px 0;
+  /* 隐藏PC端导航，Logo居中 */
+  .top-menu {
+    display: none !important;
   }
   
-  .footer-top {
-    flex-direction: column;
-    gap: 20px;
-    padding-bottom: 15px;
-    margin-bottom: 15px;
-  }
-  
-  .footer-section {
-    margin-bottom: 0;
-    width: 100%;
-    padding: 15px 20px 10px;
-  }
-  
-  .footer-section h4 {
-    margin-top: 0;
-    margin-bottom: 12px;
-    font-size: 15px;
-  }
-  
-  .footer-section ul li {
-    padding: 3px 0;
-    font-size: 13px;
-  }
-  
-  .footer-bottom {
-    flex-direction: column;
-    gap: 15px;
-    text-align: center;
-    padding-top: 15px;
-  }
-  
-  .footer-bottom p {
-    text-align: center;
-    font-size: 12px;
-    margin: 0;
-  }
-  
-  .footer-links {
+  .header-content {
     justify-content: center;
-    gap: 10px;
   }
-  
-  .footer-links a {
-    font-size: 12px;
-  }
-}
 
-@media (max-width: 768px) {
-  /* footer-top 三个 section 横向排列 */
+  /* 调整内容区域间距，防止被底部TabBar遮挡 */
+  .app-main {
+    padding: 12px 0 80px 0; /* 底部留出 80px */
+  }
+
+  .content-wrapper {
+    margin: 0 12px;
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  /* 极简页脚：移动端不显示复杂链接，只显示版权 */
   .footer-top {
-    display: flex;           /* 整体横向排列 */
-    flex-direction: row;     
-    flex-wrap: nowrap;       /* 不换行 */
-    overflow-x: auto;        /* 超出可滚动 */
-    gap: 20px;               /* section 间距 */
-    padding-bottom: 15px;
-    margin-bottom: 15px;
+    display: none !important;
   }
 
-  /* 每个 section 固定宽度，纵向排列 li */
-  .footer-section {
-    flex: 0 0 200px;         /* 每个 section 固定宽度，也可以用百分比 flex: 0 0 30%; */
-    text-align: left;        /* 内部文字左对齐 */
+  .app-footer {
+    background: transparent;
+    border: none;
+    margin-top: 0;
+    padding: 20px 0 100px 0 !important; /* 额外padding防止TabBar遮挡版权字 */
+  }
+
+  .footer-bottom {
+    border: none;
+  }
+
+  /* 显示底部导航栏 */
+  .mobile-tab-bar {
     display: flex;
-    flex-direction: column;  /* section 内纵向排列 */
-    gap: 10px;
-    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: var(--tab-bar-height);
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    justify-content: space-around;
+    align-items: center;
+    z-index: 2000;
+    padding-bottom: env(safe-area-inset-bottom); /* 适配全面屏底部横条 */
   }
 
-  /* 列表内部 li 纵向排列 */
-  .footer-section ul {
+  .tab-item {
     display: flex;
-    flex-direction: column;  /* li 纵向排列 */
-    gap: 5px;                /* li 间距 */
-    padding-left: 0;
-    margin: 0;
-    list-style: none;
+    flex-direction: column;
+    align-items: center;
+    color: #8e8e93;
+    font-size: 10px;
+    flex: 1;
+    transition: all 0.2s;
   }
 
-  .footer-section ul li {
-    white-space: normal;     /* 文本自动换行 */
+  .tab-item .el-icon {
+    font-size: 22px;
+    margin-bottom: 4px;
+  }
+
+  .tab-item.active {
+    color: var(--app-primary);
+  }
+
+  /* 浮动AI按钮位置调整，防止遮挡TabBar */
+  .floating-ai-chat {
+    bottom: 85px !important;
+    right: 20px !important;
   }
 }
+
+/* --- 8. Element Plus 组件美化 --- */
+.el-card {
+  border: none !important;
+  border-radius: 12px !important;
+  background: rgba(255, 255, 255, 0.6) !important;
+  backdrop-filter: blur(5px);
+}
+
+.el-button--primary {
+  --el-button-bg-color: var(--app-primary);
+  border-radius: 8px;
+}
+
 </style>
