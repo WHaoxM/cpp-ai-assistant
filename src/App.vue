@@ -127,35 +127,22 @@ export default {
 }
 </script>
 <style>
-/* --- 1. 核心重置与全局变量 --- */
+/* --- 1. 基础重置：禁止全局横向溢出 --- */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-:root {
-  --app-primary: #1890ff;
-  --glass-bg: rgba(255, 255, 255, 0.8);
-  --glass-border: rgba(255, 255, 255, 0.4);
-}
-
 html, body {
   width: 100%;
   height: 100%;
-  overflow-x: hidden; /* 强制消除物理溢出，防止缩放错误 */
-  background-color: #f5f7fa;
+  /* 关键：禁止页面整体左右晃动，确保上下滑动顺畅 */
+  overflow-x: hidden; 
+  -webkit-overflow-scrolling: touch; /* iOS 滚动优化 */
 }
 
-/* --- 2. 响应式布局显示控制 --- */
-@media (max-width: 768px) {
-  .pc-only { display: none !important; }
-}
-@media (min-width: 769px) {
-  .mobile-only { display: none !important; }
-}
-
-/* --- 3. 容器布局：PC端丝滑，移动端稳定 --- */
+/* --- 2. 容器适配：PC丝滑，移动端固定宽度 --- */
 .app-container {
   display: flex;
   flex-direction: column;
@@ -164,105 +151,102 @@ html, body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-attachment: fixed; /* PC端背景固定，增加丝滑感 */
-  transition: background 0.3s ease;
+  /* PC端固定背景实现丝滑感，移动端改为滚动防止Bug */
+  background-attachment: fixed; 
 }
 
 @media (max-width: 768px) {
   .app-container {
-    background-attachment: scroll; /* 移动端滚动背景，提升性能，防止渲染Bug */
+    background-attachment: scroll;
   }
 }
 
-/* --- 4. 头部导航适配 --- */
+/* --- 3. 头部适配：缩小视野杀手 --- */
 .app-header {
   position: sticky;
   top: 0;
   z-index: 1000;
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(15px);
-  border-bottom: 1px solid var(--glass-border);
-  height: 60px !important;
-}
-
-.header-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 100%;
+  border-bottom: 1px solid rgba(255,255,255,0.3);
+  height: 50px !important; /* 缩小高度 */
 }
 
 .logo h1 {
-  font-size: clamp(14px, 4vw, 20px); /* 自动根据屏幕缩放字号 */
-  color: var(--app-primary);
-  font-weight: 800;
+  /* 使用 clamp 确保标题在手机上不会像截图里那么巨大 */
+  font-size: clamp(14px, 4vw, 18px); 
+  text-align: center;
+  line-height: 50px;
+  color: #1890ff;
 }
 
-/* --- 5. 主内容区域适配 (解决拖动不全) --- */
+/* --- 4. 主区域：实现“完美拖动”的核心 --- */
 .app-main {
   flex: 1;
+  padding: 10px 0 80px 0;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 20px 0;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
 }
 
 .content-wrapper {
   flex: 1;
-  background: var(--glass-bg);
-  backdrop-filter: blur(10px);
-  border-radius: 16px;
-  padding: 24px;
-  margin: 0 20px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-  border: 1px solid var(--glass-border);
-  /* 修复移动端大小错误的关键 */
-  width: auto;
+  margin: 0 10px;
+  padding: 15px !important;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(15px);
+  border-radius: 12px;
+  /* 修复：即使题目少，也撑开高度，保证视觉平衡 */
+  min-height: calc(100vh - 160px); 
+  
+  /* 关键：锁定容器宽度，内部溢出则允许局部滚动 */
+  max-width: calc(100vw - 20px);
   overflow: hidden; 
   display: flex;
   flex-direction: column;
 }
 
+/* --- 5. 针对 Element Plus 表格的移动端“横向拖动”修复 --- */
 @media (max-width: 768px) {
-  .app-main {
-    padding: 10px 0 80px 0; /* 为底部TabBar预留空间 */
+  /* 强制表格容器允许横向滚动 */
+  .el-table {
+    width: 100% !important;
   }
-  .content-wrapper {
-    margin: 0 10px;
-    padding: 15px !important;
-    border-radius: 12px;
-    min-height: calc(100vh - 160px);
+
+  /* 使得表格内的所有列可以完整显示并通过拖动查看 */
+  .el-table__inner-wrapper {
+    overflow-x: auto !important; 
   }
   
-  /* 强制子页面内部所有表格允许局部横向滚动，不撑开父容器 */
-  .el-table {
-    max-width: 100% !important;
+  /* 隐藏滚动条，但保留滚动功能（可选，美化界面） */
+  .el-table__inner-wrapper::-webkit-scrollbar {
+    display: none;
   }
-  .el-table__inner-wrapper {
-    overflow-x: auto !important;
+
+  /* 修复截图中的按钮挤压问题 */
+  .el-table .cell {
+    white-space: nowrap !important; /* 保证文字不折行 */
+    padding: 0 4px !important;
+  }
+
+  /* 调整子页面内标题大小 */
+  .content-wrapper h1, .content-wrapper h2 {
+    font-size: 18px !important;
+    margin: 10px 0 !important;
   }
 }
 
-/* --- 6. 移动端 TabBar (小程序化视觉) --- */
+/* --- 6. 底部导航栏（小程序感） --- */
 .mobile-tab-bar {
   position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 65px;
+  bottom: 0; left: 0; right: 0;
+  height: 60px;
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
-  border-top: 1px solid rgba(0, 0, 0, 0.05);
   display: flex;
-  justify-content: space-around;
-  align-items: center;
   z-index: 2000;
   padding-bottom: env(safe-area-inset-bottom);
+  border-top: 1px solid rgba(0,0,0,0.05);
 }
 
 .tab-item {
@@ -270,29 +254,26 @@ html, body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: #8e8e93;
-  font-size: 11px;
-}
-
-.tab-item .el-icon {
-  font-size: 22px;
-  margin-bottom: 3px;
+  justify-content: center;
+  color: #909399;
+  font-size: 10px;
 }
 
 .tab-item.active {
-  color: var(--app-primary);
-  font-weight: bold;
+  color: #1890ff;
 }
 
-/* --- 7. 页面平滑过渡 (丝滑感) --- */
-.router-view-content {
-  animation: fadeIn 0.4s ease;
+/* --- 7. PC 端丝滑优化 --- */
+@media (min-width: 769px) {
+  .app-main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px 0;
+  }
+  .content-wrapper {
+    margin: 0 20px;
+    padding: 30px !important;
+  }
 }
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(5px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
 
 </style>
