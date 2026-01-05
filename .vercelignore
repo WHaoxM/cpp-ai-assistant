@@ -9,7 +9,6 @@ dist
 .trae
 error.txt
 docs
-api
 server.js
 api-routes.js
 deploy.bat
