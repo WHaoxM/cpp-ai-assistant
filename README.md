@@ -243,7 +243,7 @@ cpp-ai-assistant/
 ### 常见问题
 
 1. **构建失败**
-   - 检查 Node.js 版本（建议 16+）
+   - 检查 Node.js 版本（建议 20+）
    - 清除 node_modules 并重新安装：`rm -rf node_modules && npm install`
 
 2. **API 连接失败**
@@ -280,7 +280,7 @@ MIT License
 
 ## 更新日志
 
-### v1.0.0 (2024-01-06)
+### v1.0.0 (2026-01-06)
 
 - 初始版本发布
 - AI 聊天功能
