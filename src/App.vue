@@ -3,9 +3,14 @@
     <el-header class="app-header">
       <div class="header-content">
         <div class="logo">
-          <h1>C++ AI 题库</h1>
+          <h1>C++ AI 题库助手</h1>
         </div>
-        <el-menu mode="horizontal" :default-active="activeMenu" class="top-menu pc-only" router>
+        <el-menu
+          mode="horizontal"
+          :default-active="activeMenu"
+          class="top-menu pc-only"
+          router
+        >
           <el-menu-item index="/">题库列表</el-menu-item>
           <el-menu-item index="/ai-chat">AI 聊天</el-menu-item>
           <el-menu-item index="/model-training">模型训练</el-menu-item>
@@ -17,14 +22,13 @@
     <el-main class="app-main">
       <div class="content-wrapper">
         <router-view />
-        <div class="empty-decoration">
-          <div class="decoration-icon"></div>
+        <div class="empty-decoration mobile-only">
           <p>专注 C++ 进阶提升</p>
         </div>
       </div>
     </el-main>
 
-    <nav class="mobile-tab-bar">
+    <nav class="mobile-tab-bar mobile-only">
       <div class="tab-item" :class="{active: activeMenu === '/'}" @click="$router.push('/')">
         <el-icon><Document /></el-icon><span>题库</span>
       </div>
@@ -41,13 +45,14 @@
     
     <el-footer class="app-footer pc-only">
       <div class="footer-bottom">
-        <p>&copy; 2026 C++ AI 题库助手</p>
+        <p>&copy; 2026 C++ AI 题库助手. 助力您高效复习</p>
       </div>
     </el-footer>
-
+    
     <FloatingAIChat ref="floatingChat" @question-selected="handleQuestionSelected" />
   </div>
 </template>
+
 
 
 <script>
@@ -122,115 +127,140 @@ export default {
 }
 </script>
 <style>
-/* --- 1. 全局防溢出与小程序化重置 --- */
+/* --- 1. 核心重置与全局变量 --- */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+:root {
+  --app-primary: #1890ff;
+  --glass-bg: rgba(255, 255, 255, 0.8);
+  --glass-border: rgba(255, 255, 255, 0.4);
+}
+
 html, body {
   width: 100%;
   height: 100%;
-  /* 彻底禁止页面左右晃动，像小程序一样稳定 */
-  overflow-x: hidden; 
-  -webkit-text-size-adjust: 100%;
+  overflow-x: hidden; /* 强制消除物理溢出，防止缩放错误 */
+  background-color: #f5f7fa;
 }
 
+/* --- 2. 响应式布局显示控制 --- */
+@media (max-width: 768px) {
+  .pc-only { display: none !important; }
+}
+@media (min-width: 769px) {
+  .mobile-only { display: none !important; }
+}
+
+/* --- 3. 容器布局：PC端丝滑，移动端稳定 --- */
 .app-container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  width: 100vw; /* 锁定宽度为屏幕宽度 */
-  overflow-x: hidden;
-  background-attachment: scroll; /* 移动端不建议用 fixed，防止缩放 Bug */
+  width: 100vw;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* PC端背景固定，增加丝滑感 */
+  transition: background 0.3s ease;
 }
 
-/* --- 2. 头部标题修复 (针对截图中的巨大字号) --- */
+@media (max-width: 768px) {
+  .app-container {
+    background-attachment: scroll; /* 移动端滚动背景，提升性能，防止渲染Bug */
+  }
+}
+
+/* --- 4. 头部导航适配 --- */
 .app-header {
-  height: 50px !important;
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(10px);
   position: sticky;
   top: 0;
   z-index: 1000;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(15px);
+  border-bottom: 1px solid var(--glass-border);
+  height: 60px !important;
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
 }
 
 .logo h1 {
-  font-size: 16px !important; /* 大幅缩小标题，避免遮挡视野 */
-  text-align: center;
-  color: #1890ff;
+  font-size: clamp(14px, 4vw, 20px); /* 自动根据屏幕缩放字号 */
+  color: var(--app-primary);
+  font-weight: 800;
 }
 
-/* --- 3. 容器自适应修复 --- */
+/* --- 5. 主内容区域适配 (解决拖动不全) --- */
 .app-main {
   flex: 1;
-  padding: 10px 0 80px 0; /* 底部留出 TabBar 的位置 */
   display: flex;
   flex-direction: column;
+  padding: 20px 0;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .content-wrapper {
   flex: 1;
-  margin: 0 10px; /* 减小外边距 */
-  padding: 15px !important; /* 减小内边距 */
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(15px);
-  border-radius: 12px;
-  min-height: calc(100vh - 160px);
-  /* 关键：防止内部元素（表格）撑开容器 */
-  width: auto; 
-  max-width: calc(100vw - 20px);
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 24px;
+  margin: 0 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--glass-border);
+  /* 修复移动端大小错误的关键 */
+  width: auto;
   overflow: hidden; 
+  display: flex;
+  flex-direction: column;
 }
 
-/* --- 4. 解决表格溢出 (最重要的部分) --- */
 @media (max-width: 768px) {
-  /* 强制表格开启局部横向滚动，而不影响页面整体宽度 */
+  .app-main {
+    padding: 10px 0 80px 0; /* 为底部TabBar预留空间 */
+  }
+  .content-wrapper {
+    margin: 0 10px;
+    padding: 15px !important;
+    border-radius: 12px;
+    min-height: calc(100vh - 160px);
+  }
+  
+  /* 强制子页面内部所有表格允许局部横向滚动，不撑开父容器 */
   .el-table {
-    width: 100% !important;
     max-width: 100% !important;
   }
-  
-  .el-table__body-wrapper, 
-  .el-table__header-wrapper {
-    overflow-x: auto !important; /* 允许在表格内滑动查看详情 */
-  }
-
-  /* 缩小子页面内部的 H1/H2 标题 */
-  .content-wrapper h1, 
-  .content-wrapper h2 {
-    font-size: 20px !important;
-    margin-bottom: 15px !important;
-    text-align: center;
-  }
-
-  /* 筛选区域表单改为垂直排列，防止横向挤压 */
-  .el-form--inline .el-form-item {
-    display: block !important;
-    margin-right: 0 !important;
-    margin-bottom: 10px !important;
-  }
-  
-  /* 按钮宽度自适应 */
-  .el-button {
-    width: auto;
-    padding: 8px 12px;
-    font-size: 12px;
+  .el-table__inner-wrapper {
+    overflow-x: auto !important;
   }
 }
 
-/* --- 5. 底部 TabBar 优化 --- */
+/* --- 6. 移动端 TabBar (小程序化视觉) --- */
 .mobile-tab-bar {
-  display: flex;
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 60px;
+  height: 65px;
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
-  border-top: 1px solid #eee;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
   z-index: 2000;
   padding-bottom: env(safe-area-inset-bottom);
 }
@@ -240,14 +270,28 @@ html, body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  color: #909399;
+  color: #8e8e93;
   font-size: 11px;
 }
 
+.tab-item .el-icon {
+  font-size: 22px;
+  margin-bottom: 3px;
+}
+
 .tab-item.active {
-  color: #1890ff;
+  color: var(--app-primary);
   font-weight: bold;
+}
+
+/* --- 7. 页面平滑过渡 (丝滑感) --- */
+.router-view-content {
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 
