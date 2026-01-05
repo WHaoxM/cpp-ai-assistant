@@ -1,0 +1,282 @@
+[Violation]Added non-passive event listener to a scroll-blocking <某些> 事件. Consider marking event handler as 'passive' to make the page more responsive. See <URL>
+main.js?t=1767643772216:87 [Violation]Added non-passive event listener to a scroll-blocking 'touchstart' event. Consider marking event handler as 'passive' to make the page more responsive. See https://www.chromestatus.com/feature/5745543795965952
+addEventListener @ runtime-dom.esm-bundler.js:681
+patchEvent @ runtime-dom.esm-bundler.js:699
+patchProp @ runtime-dom.esm-bundler.js:776
+mountElement @ runtime-core.esm-bundler.js:5596
+processElement @ runtime-core.esm-bundler.js:5533
+patch @ runtime-core.esm-bundler.js:5391
+componentUpdateFn @ runtime-core.esm-bundler.js:6051
+run @ reactivity.esm-bundler.js:237
+setupRenderEffect @ runtime-core.esm-bundler.js:6179
+mountComponent @ runtime-core.esm-bundler.js:5953
+processComponent @ runtime-core.esm-bundler.js:5905
+patch @ runtime-core.esm-bundler.js:5403
+mountChildren @ runtime-core.esm-bundler.js:5655
+mountElement @ runtime-core.esm-bundler.js:5578
+processElement @ runtime-core.esm-bundler.js:5533
+patch @ runtime-core.esm-bundler.js:5391
+componentUpdateFn @ runtime-core.esm-bundler.js:6051
+run @ reactivity.esm-bundler.js:237
+setupRenderEffect @ runtime-core.esm-bundler.js:6179
+mountComponent @ runtime-core.esm-bundler.js:5953
+processComponent @ runtime-core.esm-bundler.js:5905
+patch @ runtime-core.esm-bundler.js:5403
+render2 @ runtime-core.esm-bundler.js:6718
+mount @ runtime-core.esm-bundler.js:4179
+app.mount @ runtime-dom.esm-bundler.js:1826
+(匿名) @ main.js?t=1767643772216:87
+content_script.js:4659 [Violation]Added non-passive event listener to a scroll-blocking 'touchstart' event. Consider marking event handler as 'passive' to make the page more responsive. See https://www.chromestatus.com/feature/5745543795965952
+Tm @ content_script.js:4659
+OO @ content_script.js:4659
+_O @ content_script.js:4659
+Y4 @ content_script.js:4659
+X7 @ content_script.js:4659
+Y4 @ content_script.js:4659
+(匿名) @ content_script.js:4659
+xm @ content_script.js:4659
+setTimeout
+Q4 @ content_script.js:4659
+tc.setState @ content_script.js:4659
+r.__c.r.__ @ content_script.js:4659
+(匿名) @ content_script.js:5289
+Promise.then
+(匿名) @ content_script.js:5289
+J4 @ content_script.js:4659
+zO @ content_script.js:4659
+setTimeout
+n @ content_script.js:4659
+requestAnimationFrame
+HO @ content_script.js:4659
+Ke.diffed @ content_script.js:4659
+Y4 @ content_script.js:4659
+X7 @ content_script.js:4659
+Y4 @ content_script.js:4659
+X7 @ content_script.js:4659
+Y4 @ content_script.js:4659
+X7 @ content_script.js:4659
+Y4 @ content_script.js:4659
+ln @ content_script.js:4659
+l$ @ content_script.js:5973
+_5 @ content_script.js:5972
+await in _5
+ER @ content_script.js:8514
+wR @ content_script.js:8514
+(匿名) @ content_script.js:8516
+Promise.then
+(匿名) @ content_script.js:8516
+Promise.then
+ite @ content_script.js:8516
+await in ite
+(匿名) @ content_script.js:8516
+(匿名) @ content_script.js:8516
+content_script.js:4659 [Violation]Added non-passive event listener to a scroll-blocking 'touchstart' event. Consider marking event handler as 'passive' to make the page more responsive. See https://www.chromestatus.com/feature/5745543795965952
+Tm @ content_script.js:4659
+OO @ content_script.js:4659
+_O @ content_script.js:4659
+Y4 @ content_script.js:4659
+X7 @ content_script.js:4659
+Y4 @ content_script.js:4659
+X7 @ content_script.js:4659
+_O @ content_script.js:4659
+Y4 @ content_script.js:4659
+X7 @ content_script.js:4659
+_O @ content_script.js:4659
+Y4 @ content_script.js:4659
+X7 @ content_script.js:4659
+Y4 @ content_script.js:4659
+X7 @ content_script.js:4659
+_O @ content_script.js:4659
+Y4 @ content_script.js:4659
+X7 @ content_script.js:4659
+Y4 @ content_script.js:4659
+(匿名) @ content_script.js:4659
+xm @ content_script.js:4659
+setTimeout
+Q4 @ content_script.js:4659
+tc.setState @ content_script.js:4659
+r.__c.r.__ @ content_script.js:4659
+(匿名) @ content_script.js:5289
+Promise.then
+(匿名) @ content_script.js:5289
+J4 @ content_script.js:4659
+zO @ content_script.js:4659
+setTimeout
+n @ content_script.js:4659
+requestAnimationFrame
+HO @ content_script.js:4659
+Ke.diffed @ content_script.js:4659
+Y4 @ content_script.js:4659
+X7 @ content_script.js:4659
+Y4 @ content_script.js:4659
+X7 @ content_script.js:4659
+Y4 @ content_script.js:4659
+X7 @ content_script.js:4659
+Y4 @ content_script.js:4659
+ln @ content_script.js:4659
+l$ @ content_script.js:5973
+_5 @ content_script.js:5972
+await in _5
+ER @ content_script.js:8514
+wR @ content_script.js:8514
+(匿名) @ content_script.js:8516
+Promise.then
+(匿名) @ content_script.js:8516
+Promise.then
+ite @ content_script.js:8516
+await in ite
+(匿名) @ content_script.js:8516
+(匿名) @ content_script.js:8516
+content_script.js:4659 [Violation]Added non-passive event listener to a scroll-blocking 'touchstart' event. Consider marking event handler as 'passive' to make the page more responsive. See https://www.chromestatus.com/feature/5745543795965952
+Tm @ content_script.js:4659
+OO @ content_script.js:4659
+_O @ content_script.js:4659
+Y4 @ content_script.js:4659
+X7 @ content_script.js:4659
+Y4 @ content_script.js:4659
+X7 @ content_script.js:4659
+_O @ content_script.js:4659
+Y4 @ content_script.js:4659
+X7 @ content_script.js:4659
+Y4 @ content_script.js:4659
+(匿名) @ content_script.js:4659
+xm @ content_script.js:4659
+setTimeout
+Q4 @ content_script.js:4659
+tc.setState @ content_script.js:4659
+r.__c.r.__ @ content_script.js:4659
+(匿名) @ content_script.js:5289
+Promise.then
+(匿名) @ content_script.js:5289
+J4 @ content_script.js:4659
+zO @ content_script.js:4659
+setTimeout
+n @ content_script.js:4659
+requestAnimationFrame
+HO @ content_script.js:4659
+Ke.diffed @ content_script.js:4659
+Y4 @ content_script.js:4659
+X7 @ content_script.js:4659
+Y4 @ content_script.js:4659
+X7 @ content_script.js:4659
+Y4 @ content_script.js:4659
+X7 @ content_script.js:4659
+Y4 @ content_script.js:4659
+ln @ content_script.js:4659
+l$ @ content_script.js:5973
+_5 @ content_script.js:5972
+await in _5
+ER @ content_script.js:8514
+wR @ content_script.js:8514
+(匿名) @ content_script.js:8516
+Promise.then
+(匿名) @ content_script.js:8516
+Promise.then
+ite @ content_script.js:8516
+await in ite
+(匿名) @ content_script.js:8516
+(匿名) @ content_script.js:8516
+content_script.js:4659 [Violation]Added non-passive event listener to a scroll-blocking 'touchstart' event. Consider marking event handler as 'passive' to make the page more responsive. See https://www.chromestatus.com/feature/5745543795965952
+Tm @ content_script.js:4659
+OO @ content_script.js:4659
+_O @ content_script.js:4659
+Y4 @ content_script.js:4659
+X7 @ content_script.js:4659
+Y4 @ content_script.js:4659
+X7 @ content_script.js:4659
+_O @ content_script.js:4659
+Y4 @ content_script.js:4659
+X7 @ content_script.js:4659
+_O @ content_script.js:4659
+Y4 @ content_script.js:4659
+X7 @ content_script.js:4659
+Y4 @ content_script.js:4659
+(匿名) @ content_script.js:4659
+xm @ content_script.js:4659
+setTimeout
+Q4 @ content_script.js:4659
+tc.setState @ content_script.js:4659
+r.__c.r.__ @ content_script.js:4659
+(匿名) @ content_script.js:5289
+Promise.then
+(匿名) @ content_script.js:5289
+J4 @ content_script.js:4659
+zO @ content_script.js:4659
+setTimeout
+n @ content_script.js:4659
+requestAnimationFrame
+HO @ content_script.js:4659
+Ke.diffed @ content_script.js:4659
+Y4 @ content_script.js:4659
+X7 @ content_script.js:4659
+Y4 @ content_script.js:4659
+X7 @ content_script.js:4659
+Y4 @ content_script.js:4659
+X7 @ content_script.js:4659
+Y4 @ content_script.js:4659
+ln @ content_script.js:4659
+l$ @ content_script.js:5973
+_5 @ content_script.js:5972
+await in _5
+ER @ content_script.js:8514
+wR @ content_script.js:8514
+(匿名) @ content_script.js:8516
+Promise.then
+(匿名) @ content_script.js:8516
+Promise.then
+ite @ content_script.js:8516
+await in ite
+(匿名) @ content_script.js:8516
+(匿名) @ content_script.js:8516
+content_script.js:4659 [Violation]Added non-passive event listener to a scroll-blocking 'touchstart' event. Consider marking event handler as 'passive' to make the page more responsive. See https://www.chromestatus.com/feature/5745543795965952
+Tm @ content_script.js:4659
+OO @ content_script.js:4659
+_O @ content_script.js:4659
+Y4 @ content_script.js:4659
+X7 @ content_script.js:4659
+Y4 @ content_script.js:4659
+X7 @ content_script.js:4659
+_O @ content_script.js:4659
+Y4 @ content_script.js:4659
+X7 @ content_script.js:4659
+_O @ content_script.js:4659
+Y4 @ content_script.js:4659
+X7 @ content_script.js:4659
+Y4 @ content_script.js:4659
+(匿名) @ content_script.js:4659
+xm @ content_script.js:4659
+setTimeout
+Q4 @ content_script.js:4659
+tc.setState @ content_script.js:4659
+r.__c.r.__ @ content_script.js:4659
+(匿名) @ content_script.js:5289
+Promise.then
+(匿名) @ content_script.js:5289
+J4 @ content_script.js:4659
+zO @ content_script.js:4659
+setTimeout
+n @ content_script.js:4659
+requestAnimationFrame
+HO @ content_script.js:4659
+Ke.diffed @ content_script.js:4659
+Y4 @ content_script.js:4659
+X7 @ content_script.js:4659
+Y4 @ content_script.js:4659
+X7 @ content_script.js:4659
+Y4 @ content_script.js:4659
+X7 @ content_script.js:4659
+Y4 @ content_script.js:4659
+ln @ content_script.js:4659
+l$ @ content_script.js:5973
+_5 @ content_script.js:5972
+await in _5
+ER @ content_script.js:8514
+wR @ content_script.js:8514
+(匿名) @ content_script.js:8516
+Promise.then
+(匿名) @ content_script.js:8516
+Promise.then
+ite @ content_script.js:8516
+await in ite
+(匿名) @ content_script.js:8516
+(匿名) @ content_script.js:8516

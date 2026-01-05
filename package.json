@@ -1,0 +1,46 @@
+{
+  "name": "cpp-ai-assistant",
+  "private": true,
+  "version": "1.0.0",
+  "description": "C++ AI Assistant for practicing and learning C++",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "dev:frontend": "vite",
+    "dev:backend": "nodemon server.js",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "ai",
+    "cpp",
+    "learning",
+    "education",
+    "assistant"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.6.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "highlight.js": "^11.11.1",
+    "marked": "^17.0.1",
+    "vue-router": "^4.6.4"
+  },
+  "devDependencies": {
+    "@element-plus/icons-vue": "^2.1.0",
+    "@vitejs/plugin-vue": "^4.2.3",
+    "element-plus": "^2.3.8",
+    "nodemon": "^3.0.1",
+    "vite": "^4.4.5",
+    "vue": "^3.3.4"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}
