@@ -122,91 +122,105 @@ export default {
 }
 </script>
 <style>
-/* --- 1. 移动端优先与防溢出重置 --- */
+/* --- 1. 全局防溢出与小程序化重置 --- */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-:root {
-  --app-primary: #1890ff;
-  --glass-bg: rgba(255, 255, 255, 0.82);
-  --glass-border: rgba(255, 255, 255, 0.4);
-}
-
 html, body {
   width: 100%;
   height: 100%;
-  /* 解决移动端左右晃动的关键 */
+  /* 彻底禁止页面左右晃动，像小程序一样稳定 */
   overflow-x: hidden; 
-  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
 }
 
 .app-container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  width: 100%;
-  /* 防止子元素（如表格）撑破容器 */
-  overflow-x: hidden; 
-  background-size: cover;
-  background-position: center;
-  background-attachment: scroll; 
+  width: 100vw; /* 锁定宽度为屏幕宽度 */
+  overflow-x: hidden;
+  background-attachment: scroll; /* 移动端不建议用 fixed，防止缩放 Bug */
 }
 
-/* --- 2. 头部：移动端大幅收缩 --- */
+/* --- 2. 头部标题修复 (针对截图中的巨大字号) --- */
 .app-header {
-  height: 54px !important;
-  background: rgba(255, 255, 255, 0.8);
+  height: 50px !important;
+  background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--glass-border);
   position: sticky;
   top: 0;
   z-index: 1000;
 }
 
-.header-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 15px;
-  display: flex;
-  align-items: center;
-  height: 100%;
-}
-
 .logo h1 {
-  font-size: 16px; /* 解决标题过大挡住视野 */
-  font-weight: bold;
-  color: var(--app-primary);
-  white-space: nowrap;
+  font-size: 16px !important; /* 大幅缩小标题，避免遮挡视野 */
+  text-align: center;
+  color: #1890ff;
 }
 
-/* --- 3. 主内容：实现小程序般的容器感 --- */
+/* --- 3. 容器自适应修复 --- */
 .app-main {
   flex: 1;
-  padding: 12px 0 80px 0; /* 底部留出TabBar空间 */
+  padding: 10px 0 80px 0; /* 底部留出 TabBar 的位置 */
   display: flex;
   flex-direction: column;
 }
 
 .content-wrapper {
   flex: 1;
-  margin: 0 12px;
-  padding: 16px;
-  background: var(--glass-bg);
+  margin: 0 10px; /* 减小外边距 */
+  padding: 15px !important; /* 减小内边距 */
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(15px);
   border-radius: 12px;
-  border: 1px solid var(--glass-border);
-  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
   min-height: calc(100vh - 160px);
-  display: flex;
-  flex-direction: column;
-  /* 确保内部长内容不撑开父级 */
+  /* 关键：防止内部元素（表格）撑开容器 */
+  width: auto; 
+  max-width: calc(100vw - 20px);
   overflow: hidden; 
 }
 
-/* --- 4. 移动端底部 TabBar --- */
+/* --- 4. 解决表格溢出 (最重要的部分) --- */
+@media (max-width: 768px) {
+  /* 强制表格开启局部横向滚动，而不影响页面整体宽度 */
+  .el-table {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  
+  .el-table__body-wrapper, 
+  .el-table__header-wrapper {
+    overflow-x: auto !important; /* 允许在表格内滑动查看详情 */
+  }
+
+  /* 缩小子页面内部的 H1/H2 标题 */
+  .content-wrapper h1, 
+  .content-wrapper h2 {
+    font-size: 20px !important;
+    margin-bottom: 15px !important;
+    text-align: center;
+  }
+
+  /* 筛选区域表单改为垂直排列，防止横向挤压 */
+  .el-form--inline .el-form-item {
+    display: block !important;
+    margin-right: 0 !important;
+    margin-bottom: 10px !important;
+  }
+  
+  /* 按钮宽度自适应 */
+  .el-button {
+    width: auto;
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+}
+
+/* --- 5. 底部 TabBar 优化 --- */
 .mobile-tab-bar {
   display: flex;
   position: fixed;
@@ -216,7 +230,7 @@ html, body {
   height: 60px;
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
-  border-top: 1px solid rgba(0,0,0,0.05);
+  border-top: 1px solid #eee;
   z-index: 2000;
   padding-bottom: env(safe-area-inset-bottom);
 }
@@ -225,70 +239,16 @@ html, body {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   color: #909399;
   font-size: 11px;
 }
 
-.tab-item .el-icon {
-  font-size: 20px;
-  margin-bottom: 2px;
-}
-
 .tab-item.active {
-  color: var(--app-primary);
+  color: #1890ff;
   font-weight: bold;
 }
 
-/* --- 5. 装饰位与响应式修正 --- */
-.empty-decoration {
-  margin-top: auto;
-  padding-top: 40px;
-  text-align: center;
-  opacity: 0.3;
-}
-
-.empty-decoration p {
-  font-size: 12px;
-  color: #666;
-}
-
-/* 隐藏PC端的各种元素 */
-@media (max-width: 768px) {
-  .pc-only {
-    display: none !important;
-  }
-
-  /* 核心：修复截图中“题目助手”四个大字挡住视野 */
-  /* 假设你在子页面有 h1 或 h2 */
-  .app-main h1, .app-main h2 {
-    font-size: 20px !important;
-    margin-bottom: 12px !important;
-    text-align: center;
-  }
-
-  /* 修复表格溢出（最重要！） */
-  .el-table {
-    font-size: 12px !important;
-  }
-  
-  .el-table__body-wrapper, .el-table__header-wrapper {
-    overflow-x: auto !important; /* 允许表格内部横向滚动，而非全屏缩放 */
-  }
-
-  /* 搜索表单在移动端改为单列 */
-  .el-form--inline .el-form-item {
-    display: block !important;
-    margin-right: 0 !important;
-  }
-}
-
-/* PC 端隐藏移动端组件 */
-@media (min-width: 769px) {
-  .mobile-tab-bar {
-    display: none !important;
-  }
-}
 
 </style>
