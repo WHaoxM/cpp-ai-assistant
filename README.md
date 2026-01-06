@@ -12,7 +12,6 @@
 - **在线 AI 模型**：直接使用 DeepSeek 和 Qwen 在线服务
 
 ### 高级功能
-- **Markdown 渲染**：支持代码高亮和格式化文本
 - **第三方平台支持**：支持心流、DeepSeek、通义千问等平台
 - **悬浮窗**：全局悬浮 AI 聊天窗口，随时访问
 - **题目分析**：AI 自动分析题目并提供详细解答
@@ -189,7 +188,7 @@ cpp-ai-assistant/
 ### 添加新功能
 
 1. 在 `src/views/` 中创建新页面
-2. 在 `src/router/` 中配置路由（如果使用路由）
+2. 在 `src/router/` 中配置路由
 3. 在 `src/services/` 中添加服务函数
 4. 在 `src/components/` 中创建可复用组件
 
@@ -198,7 +197,7 @@ cpp-ai-assistant/
 - 使用 Vue 3 Composition API
 - 使用 Element Plus 组件
 - 遵循 ESLint 规则
-- 添加适当的注释
+- 适当的注释
 
 ## 故障排除
 
@@ -206,7 +205,11 @@ cpp-ai-assistant/
 
 1. **构建失败**
    - 检查 Node.js 版本（建议 20+）
-   - 清除 node_modules 并重新安装：`rm -rf node_modules && npm install`
+   - 清除 node_modules 并重新安装：
+     ```bash
+     rm -rf node_modules
+     npm install
+     ```
 
 2. **API 连接失败**
    - 检查 API 密钥是否正确
@@ -242,13 +245,13 @@ MIT License
 
 ## 更新日志
 
-### v1.0.0 (2026-01-06)
+### Quick Start v1.0.0 (2026-01-06)
 
 - 初始版本发布
 - AI 聊天功能
 - 题库管理
 - 自定义模型配置
-- Markdown 渲染和代码高亮
 - 第三方平台支持
-- 悬浮窗功能
+- AI悬浮窗功能
 - 题目导入功能
+- 支持云平台在线微调模型
