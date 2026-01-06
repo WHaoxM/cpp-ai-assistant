@@ -117,7 +117,7 @@ export default {
 </script>
 
 <style>
-[cite_start]/* 1. 全局锁定与全屏容器 [cite: 1, 2, 3] */
+/* 1. 全局锁定与全屏容器 [cite: 1, 2, 3] */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html, body { width: 100%; height: 100%; overflow: hidden; }
 
@@ -126,7 +126,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; }
   flex-direction: column;
   height: 100vh;
   width: 100vw;
-  position: fixed; [cite_start]/* 锁定位置防止晃动  */
+  position: fixed; /* 锁定位置防止晃动  */
   top: 0; left: 0;
   background-size: cover;
   background-position: center;
@@ -170,21 +170,21 @@ html, body { width: 100%; height: 100%; overflow: hidden; }
   font-weight: 500;
 }
 
-[cite_start]/* 3. 主区域布局 [cite: 4, 5] */
+/* 3. 主区域布局 [cite: 4, 5] */
 .app-main {
   flex: 1;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: flex-start; /* 内容从上方开始 */
-  padding: 30px 15px 100px 15px; [cite_start]/* 留出底部空间 [cite: 5] */
-  overflow-y: auto; [cite_start]/* 仅允许纵向滚动 [cite: 4] */
+  padding: 30px 15px 100px 15px; /* 留出底部空间 [cite: 5] */
+  overflow-y: auto; /* 仅允许纵向滚动 [cite: 4] */
 }
 
 .content-wrapper {
-  width: 95% !important; [cite_start]/* [cite: 5] */
-  max-width: 1100px; [cite_start]/* [cite: 6] */
-  background: rgba(255, 255, 255, 0.75); [cite_start]/* 毛玻璃卡片 [cite: 6] */
+  width: 95% !important; /* [cite: 5] */
+  max-width: 1100px; /* [cite: 6] */
+  background: rgba(255, 255, 255, 0.75); /* 毛玻璃卡片 [cite: 6] */
   backdrop-filter: blur(20px);
   border-radius: 16px;
   padding: 25px;
@@ -192,12 +192,12 @@ html, body { width: 100%; height: 100%; overflow: hidden; }
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-[cite_start]/* 4. 移动端：底部导航栏  */
+/* 4. 移动端：底部导航栏  */
 .mobile-tab-bar {
   position: fixed;
   bottom: 0; left: 0; right: 0;
   height: 65px;
-  background: rgba(255, 255, 255, 0.85); [cite_start]/* 毛玻璃 [cite: 12] */
+  background: rgba(255, 255, 255, 0.85); /* 毛玻璃 [cite: 12] */
   backdrop-filter: blur(10px);
   display: flex;
   justify-content: space-around;
