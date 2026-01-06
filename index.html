@@ -9,18 +9,18 @@
     <link rel="icon" href="/favicon.ico">
     <title>C++ AI 题库助手</title>
 
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    
     <style>
-      /* 强制消除移动端可能出现的黑边和晃动 */
+      /* 防止首屏闪白，并锁定溢出 */
       html, body {
         width: 100% !important;
         margin: 0 !important;
         padding: 0 !important;
         overflow-x: hidden !important;
-        position: relative;
         background-color: #f5f7fa;
+      }
+      #app {
+        width: 100%;
+        min-height: 100vh;
       }
     </style>
   </head>
