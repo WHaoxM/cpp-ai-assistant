@@ -12,6 +12,10 @@
       </div>
     </el-header>
 
+    <div class="mobile-top-bar mobile-only">
+      <span>C++ AI Assistant</span>
+    </div>
+
     <el-main class="app-main">
       <div class="content-wrapper">
         <router-view />
@@ -25,7 +29,15 @@
       <div class="tab-item" :class="{active: activeMenu === '/ai-chat'}" @click="$router.push('/ai-chat')">
         <el-icon><ChatDotRound /></el-icon><span>聊天</span>
       </div>
-      </nav>
+      <div class="tab-item" :class="{active: activeMenu === '/model-training'}" @click="$router.push('/model-training')">
+        <el-icon><MagicStick /></el-icon><span>训练</span>
+      </div>
+      <div class="tab-item" :class="{active: activeMenu === '/api-config'}" @click="$router.push('/api-config')">
+        <el-icon><Setting /></el-icon><span>设置</span>
+      </div>
+    </nav>
+    
+    <FloatingAIChat ref="floatingChat" />
   </div>
 </template>
 
@@ -105,35 +117,36 @@ export default {
 </script>
 
 <style>
-/* 1. 基础全局锁定 */
+[cite_start]/* 1. 全局锁定与全屏容器 [cite: 1, 2, 3] */
 * { margin: 0; padding: 0; box-sizing: border-box; }
-html, body { width: 100%; height: 100%; overflow: hidden; [cite_start]} [cite: 1, 2]
+html, body { width: 100%; height: 100%; overflow: hidden; }
 
 .app-container {
   display: flex;
   flex-direction: column;
   height: 100vh;
   width: 100vw;
-  [cite_start]position: fixed; [cite: 3]
+  position: fixed; [cite_start]/* 锁定位置防止晃动  */
   top: 0; left: 0;
   background-size: cover;
   background-position: center;
-  overflow: hidden; /* 容器本身不滚动，交由 app-main */
+  z-index: 1;
 }
 
-/* 2. PC端：博客风格浮动导航栏 */
+/* 2. PC端：博客风毛玻璃导航 */
 .app-header.pc-only {
-  background: rgba(255, 255, 255, 0.7); /* 半透明 */
-  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.4) !important; /* 极浅透明 */
+  backdrop-filter: blur(12px); /* 毛玻璃效果 */
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   height: 60px !important;
   display: flex;
   justify-content: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   z-index: 100;
 }
 
 .header-inner {
-  width: 95%;
+  width: 90%;
   max-width: 1200px;
   display: flex;
   justify-content: space-between;
@@ -141,65 +154,87 @@ html, body { width: 100%; height: 100%; overflow: hidden; [cite_start]} [cite: 1
 }
 
 .header-logo {
-  font-size: 20px;
-  font-weight: bold;
-  color: #2c3e50;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  letter-spacing: 1px;
 }
 
-/* 去掉 Element Menu 的默认背景和边框 */
+/* 极简菜单样式 */
 .blog-menu.el-menu--horizontal {
   background: transparent !important;
   border-bottom: none !important;
 }
+.blog-menu .el-menu-item {
+  background: transparent !important;
+  font-weight: 500;
+}
 
-/* 3. 主区域布局优化 */
+[cite_start]/* 3. 主区域布局 [cite: 4, 5] */
 .app-main {
   flex: 1;
   width: 100%;
   display: flex;
-  justify-content: center; [cite_start]/* 水平居中 */ [cite: 5]
-  padding: 40px 15px 100px 15px; /* 顶部留出导航空隙，底部留出TabBar */
-  [cite_start]overflow-y: auto; 
+  justify-content: center;
+  align-items: flex-start; /* 内容从上方开始 */
+  padding: 30px 15px 100px 15px; [cite_start]/* 留出底部空间 [cite: 5] */
+  overflow-y: auto; [cite_start]/* 仅允许纵向滚动 [cite: 4] */
 }
 
 .content-wrapper {
-  [cite_start]width: 100% !important; [cite: 6]
-  max-width: 1100px;
-  background: rgba(255, 255, 255, 0.85); /* 提升磨砂透明度 */
+  width: 95% !important; [cite_start]/* [cite: 5] */
+  max-width: 1100px; [cite_start]/* [cite: 6] */
+  background: rgba(255, 255, 255, 0.75); [cite_start]/* 毛玻璃卡片 [cite: 6] */
   backdrop-filter: blur(20px);
   border-radius: 16px;
-  padding: 30px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-  height: fit-content; /* 紧贴内容 */
+  padding: 25px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-/* 4. 移动端细节微调 */
-@media (max-width: 768px) {
-  .pc-only { display: none !important; [cite_start]} [cite: 9]
-  .mobile-only { display: flex !important; }
-
-  .app-main {
-    padding: 20px 10px 80px 10px;
-  }
-
-  .content-wrapper {
-    [cite_start]width: 95% !important; [cite: 6]
-    padding: 15px;
-  }
-}
-
-/* 5. 底部 TabBar 沉浸式处理 */
+[cite_start]/* 4. 移动端：底部导航栏  */
 .mobile-tab-bar {
   position: fixed;
   bottom: 0; left: 0; right: 0;
   height: 65px;
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(15px);
+  background: rgba(255, 255, 255, 0.85); [cite_start]/* 毛玻璃 [cite: 12] */
+  backdrop-filter: blur(10px);
   display: flex;
   justify-content: space-around;
   align-items: center;
-  [cite_start]z-index: 9999; [cite: 12]
   border-top: 1px solid rgba(0,0,0,0.05);
-  padding-bottom: env(safe-area-inset-bottom); /* 适配刘海屏 */
+  z-index: 9999;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.tab-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 12px;
+  color: #666;
+}
+.tab-item.active { color: #409EFF; font-weight: bold; }
+.tab-item .el-icon { font-size: 22px; margin-bottom: 3px; }
+
+/* 5. 响应式控制 */
+@media (max-width: 768px) {
+  .pc-only { display: none !important; }
+  .mobile-only { display: flex !important; }
+  
+  .mobile-top-bar {
+    height: 44px;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(5px);
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+  }
+}
+
+@media (min-width: 769px) {
+  .mobile-only { display: none !important; }
 }
 </style>
