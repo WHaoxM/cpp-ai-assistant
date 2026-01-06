@@ -1,11 +1,9 @@
-8<template>
+<template>
   <div class="app-container" :style="{ backgroundImage: `url(${backgroundImage})` }">
-    <el-header class="app-header">
+    <el-header class="app-header pc-only">
       <div class="header-content">
-        <div class="logo">
-          <h1>C++ AI 题库助手</h1>
-        </div>
-        <el-menu mode="horizontal" :default-active="activeMenu" class="top-menu pc-only" router>
+        <div class="logo">C++ AI 题库助手</div>
+        <el-menu mode="horizontal" :default-active="activeMenu" class="top-menu" router>
           <el-menu-item index="/">题库列表</el-menu-item>
           <el-menu-item index="/ai-chat">AI 聊天</el-menu-item>
           <el-menu-item index="/model-training">模型训练</el-menu-item>
@@ -13,14 +11,18 @@
         </el-menu>
       </div>
     </el-header>
-    
+
+    <div class="mobile-header mobile-only">
+      <span>C++ AI 题库助手</span>
+    </div>
+
     <el-main class="app-main">
       <div class="content-wrapper">
         <router-view />
       </div>
     </el-main>
 
-    <nav class="mobile-tab-bar">
+    <nav class="mobile-tab-bar mobile-only">
       <div class="tab-item" :class="{active: activeMenu === '/'}" @click="$router.push('/')">
         <el-icon><Document /></el-icon><span>题库</span>
       </div>
@@ -115,81 +117,116 @@ export default {
 </script>
 
 <style>
-/* 1. 全局锁定 */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-html, body {
-  width: 100%;
-  height: 100%;
-  overflow: hidden; 
+/* 全局基础重置 */
+body, html {
+  margin: 0; padding: 0;
+  height: 100%; width: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
-/* 2. 容器：确保 100% 占满且居中 */
 .app-container {
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  width: 100vw;
-  position: fixed; /* 锁定位置，防止乱晃 */
-  top: 0; left: 0;
   background-size: cover;
   background-position: center;
-  overflow-y: auto; /* 允许纵向滚动 */
+  background-attachment: fixed;
+  transition: background-image 0.5s ease-in-out;
 }
 
-/* 3. 主区域：实现“居中卡片”感 */
+/* 背景蒙版：增加一层微暗磨砂感，提升文字可读性 */
+.app-container::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.15); 
+  z-index: 0;
+}
+
+/* 主内容区 */
 .app-main {
+  position: relative;
+  z-index: 1;
   flex: 1;
-  width: 100%;
   display: flex;
-  flex-direction: column;
-  align-items: center; /* 关键：强制内容水平居中 */
-  padding: 10px 0 80px 0;
+  justify-content: center;
+  padding: 20px 15px 80px 15px; /* 底部预留 TabBar 空间 */
+  overflow-y: auto;
 }
 
 .content-wrapper {
-  /* 移动端分辨率固定感：占满 95% 宽度，两侧对等留白 */
-  width: 95% !important; 
-  max-width: 1200px;
-  background: rgba(255, 255, 255, 0.82);
-  backdrop-filter: blur(15px);
-  border-radius: 12px;
-  padding: 15px;
-  overflow: hidden; /* 禁止卡片本身被撑大 */
-  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 1100px;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  height: fit-content; /* 随内容高度变化 */
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-/* 4. 表格局部滑动：解决内容显示不全 */
-.el-table {
-  width: 100% !important;
-}
-/* 强制表格在卡片内部开启横向拖动 */
-.el-table__inner-wrapper {
-  overflow-x: auto !important; 
-}
-
-/* 5. 移动端 UI 细节微调 */
+/* 移动端专属样式 */
 @media (max-width: 768px) {
   .pc-only { display: none !important; }
   
-  .app-header { height: 44px !important; } /* 缩小头部高度 */
-  .logo h1 { font-size: 14px !important; }
-  
-  /* 修复截图中的按钮挤压，让文字不换行，支持向左拖动查看 */
-  .el-table .cell {
-    white-space: nowrap !important;
+  .mobile-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    font-weight: bold;
+    color: #333;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+  }
+
+  .content-wrapper {
+    padding: 15px;
+    margin-top: 10px;
+  }
+
+  /* 表格收纳优化：允许横向滚动，但不撑破父容器 */
+  .el-table {
+    border-radius: 8px;
   }
 }
 
-/* 6. 底部导航栏置顶显示 */
+/* 底部 TabBar 优化 */
 .mobile-tab-bar {
   position: fixed;
   bottom: 0; left: 0; right: 0;
-  height: 60px;
-  z-index: 9999;
+  height: 65px;
   background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
   display: flex;
-  border-top: 1px solid #eee;
+  justify-content: space-around;
+  align-items: center;
+  border-top: 1px solid rgba(0,0,0,0.05);
+  padding-bottom: env(safe-area-inset-bottom); /* 适配刘海屏底部 */
+  z-index: 1000;
+}
+
+.tab-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #909399;
+  font-size: 12px;
+  transition: all 0.3s;
+}
+
+.tab-item.active {
+  color: #409EFF;
+  transform: translateY(-2px);
+}
+
+.tab-item .el-icon {
+  font-size: 24px;
+  margin-bottom: 4px;
 }
 </style>
