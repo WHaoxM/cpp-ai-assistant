@@ -100,49 +100,11 @@ cpp-ai-assistant/
 │   └── workflows/
 │       └── deploy.yml
 ├── api-routes.js           # API 路由配置
-├── deploy-github.bat       # GitHub 部署脚本
 ├── package.json
 ├── server.js              # 后端服务器
 ├── vercel.json            # Vercel 配置
 └── vite.config.js         # Vite 配置
 ```
-
-## 部署指南
-
-### 部署到 GitHub + Vercel
-
-详细部署步骤请参考 [DEPLOY.md](./DEPLOY.md)
-
-#### 快速部署
-
-1. **在 GitHub 创建仓库**
-   ```bash
-   # 访问 https://github.com/new
-   # 仓库名：cpp-ai-assistant
-   ```
-
-2. **推送代码**
-   ```bash
-   # 使用部署脚本（Windows）
-   deploy-github.bat
-
-   # 或手动推送
-   git remote add origin https://github.com/YOUR_USERNAME/cpp-ai-assistant.git
-   git push -u origin master
-   ```
-
-3. **部署到 Vercel**
-   - 访问 https://vercel.com
-   - 导入 GitHub 仓库
-   - 配置构建设置
-   - 点击部署
-
-### 环境变量
-
-如果需要配置环境变量，在 Vercel 项目设置中添加：
-
-- `API_KEY`: AI 服务 API 密钥
-- `BASE_URL`: API 基础 URL
 
 ## 配置说明
 
