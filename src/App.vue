@@ -1,9 +1,9 @@
 <template>
   <div class="app-container" :style="{ backgroundImage: `url(${backgroundImage})` }">
     <el-header class="app-header pc-only">
-      <div class="header-content">
-        <div class="logo">C++ AI 题库助手</div>
-        <el-menu mode="horizontal" :default-active="activeMenu" class="top-menu" router>
+      <div class="header-inner">
+        <div class="header-logo">C++ AI 题库助手</div>
+        <el-menu mode="horizontal" :default-active="activeMenu" class="blog-menu" router>
           <el-menu-item index="/">题库列表</el-menu-item>
           <el-menu-item index="/ai-chat">AI 聊天</el-menu-item>
           <el-menu-item index="/model-training">模型训练</el-menu-item>
@@ -11,10 +11,6 @@
         </el-menu>
       </div>
     </el-header>
-
-    <div class="mobile-header mobile-only">
-      <span>C++ AI 题库助手</span>
-    </div>
 
     <el-main class="app-main">
       <div class="content-wrapper">
@@ -29,15 +25,7 @@
       <div class="tab-item" :class="{active: activeMenu === '/ai-chat'}" @click="$router.push('/ai-chat')">
         <el-icon><ChatDotRound /></el-icon><span>聊天</span>
       </div>
-      <div class="tab-item" :class="{active: activeMenu === '/model-training'}" @click="$router.push('/model-training')">
-        <el-icon><MagicStick /></el-icon><span>训练</span>
-      </div>
-      <div class="tab-item" :class="{active: activeMenu === '/api-config'}" @click="$router.push('/api-config')">
-        <el-icon><Setting /></el-icon><span>设置</span>
-      </div>
-    </nav>
-    
-    <FloatingAIChat ref="floatingChat" @question-selected="handleQuestionSelected" />
+      </nav>
   </div>
 </template>
 
@@ -117,90 +105,101 @@ export default {
 </script>
 
 <style>
-/* 1. 彻底锁定全屏，消除默认边距 */
+/* 1. 基础全局锁定 */
 * { margin: 0; padding: 0; box-sizing: border-box; }
-
-html, body {
-  width: 100%;
-  height: 100%;
-  overflow: hidden; /* 防止双滚动条 */
-}
+html, body { width: 100%; height: 100%; overflow: hidden; [cite_start]} [cite: 1, 2]
 
 .app-container {
-  height: 100vh;
-  width: 100vw;
   display: flex;
   flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  [cite_start]position: fixed; [cite: 3]
+  top: 0; left: 0;
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
-  position: relative;
+  overflow: hidden; /* 容器本身不滚动，交由 app-main */
 }
 
-/* 2. 导航栏透明化，与背景融合 */
-.app-header {
-  background: rgba(255, 255, 255, 0.7) !important; /* 半透明 */
+/* 2. PC端：博客风格浮动导航栏 */
+.app-header.pc-only {
+  background: rgba(255, 255, 255, 0.7); /* 半透明 */
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  height: 60px !important;
   display: flex;
-  align-items: center;
-  z-index: 10;
+  justify-content: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  z-index: 100;
 }
 
-.header-content {
+.header-inner {
   width: 95%;
   max-width: 1200px;
-  margin: 0 auto;
   display: flex;
+  justify-content: space-between;
   align-items: center;
 }
 
-.logo h1 {
-  font-size: 1.2rem !important;
-  color: #333;
-  margin-right: 40px;
+.header-logo {
+  font-size: 20px;
+  font-weight: bold;
+  color: #2c3e50;
 }
 
-/* 3. 主区域：垂直居中，且支持内部滚动 */
+/* 去掉 Element Menu 的默认背景和边框 */
+.blog-menu.el-menu--horizontal {
+  background: transparent !important;
+  border-bottom: none !important;
+}
+
+/* 3. 主区域布局优化 */
 .app-main {
   flex: 1;
-  overflow-y: auto; /* 允许内容过多时滚动 */
+  width: 100%;
   display: flex;
-  justify-content: center; /* 水平居中 */
-  align-items: flex-start; /* 从顶部开始排列，防止内容被切断 */
-  padding: 40px 15px 100px 15px; /* 底部预留空间给 TabBar */
+  justify-content: center; [cite_start]/* 水平居中 */ [cite: 5]
+  padding: 40px 15px 100px 15px; /* 顶部留出导航空隙，底部留出TabBar */
+  [cite_start]overflow-y: auto; 
 }
 
-/* 4. 内容卡片：精致磨砂感 */
 .content-wrapper {
-  width: 100% !important;
+  [cite_start]width: 100% !important; [cite: 6]
   max-width: 1100px;
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.85); /* 提升磨砂透明度 */
   backdrop-filter: blur(20px);
   border-radius: 16px;
   padding: 30px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+  height: fit-content; /* 紧贴内容 */
 }
 
-/* 5. 移动端收纳适配 */
+/* 4. 移动端细节微调 */
 @media (max-width: 768px) {
-  .pc-only { display: none !important; }
-  
+  .pc-only { display: none !important; [cite_start]} [cite: 9]
+  .mobile-only { display: flex !important; }
+
   .app-main {
-    padding: 10px 10px 80px 10px;
-  }
-  
-  .content-wrapper {
-    padding: 15px;
-    border-radius: 12px;
+    padding: 20px 10px 80px 10px;
   }
 
-  /* 解决截图里“标题重复”问题：如果是移动端，隐藏卡片内可能存在的重复大标题 */
-  .content-wrapper h1, 
-  .content-wrapper .page-title {
-    font-size: 1.1rem;
-    margin-bottom: 15px;
-    text-align: center;
+  .content-wrapper {
+    [cite_start]width: 95% !important; [cite: 6]
+    padding: 15px;
   }
+}
+
+/* 5. 底部 TabBar 沉浸式处理 */
+.mobile-tab-bar {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 65px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(15px);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  [cite_start]z-index: 9999; [cite: 12]
+  border-top: 1px solid rgba(0,0,0,0.05);
+  padding-bottom: env(safe-area-inset-bottom); /* 适配刘海屏 */
 }
 </style>
