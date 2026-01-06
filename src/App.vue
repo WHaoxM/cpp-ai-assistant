@@ -1,4 +1,4 @@
-<template>
+8<template>
   <div class="app-container" :style="{ backgroundImage: `url(${backgroundImage})` }">
     <el-header class="app-header">
       <div class="header-content">
@@ -115,146 +115,81 @@ export default {
 </script>
 
 <style>
-/* --- 1. 全局重置：彻底禁止横向晃动 --- */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+/* 1. 全局锁定 */
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 html, body {
   width: 100%;
   height: 100%;
-  overflow-x: hidden; /* 核心：防止左右出现黑边或空白 */
-  -webkit-text-size-adjust: 100%;
+  overflow: hidden; 
 }
 
-/* --- 2. 容器：锁定移动端分辨率感 --- */
+/* 2. 容器：确保 100% 占满且居中 */
 .app-container {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
   width: 100vw;
+  position: fixed; /* 锁定位置，防止乱晃 */
+  top: 0; left: 0;
   background-size: cover;
   background-position: center;
-  background-attachment: fixed;
+  overflow-y: auto; /* 允许纵向滚动 */
 }
 
-/* --- 3. 头部适配 --- */
-.app-header {
-  height: 50px !important;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(10px);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.header-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 15px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 100%;
-}
-
-.logo h1 {
-  font-size: 16px;
-  color: #1890ff;
-  font-weight: bold;
-}
-
-/* --- 4. 主区域：居中且占满 --- */
+/* 3. 主区域：实现“居中卡片”感 */
 .app-main {
   flex: 1;
-  padding: 10px 0 70px 0; /* 为底部留位 */
+  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center; /* 居中内容 */
+  align-items: center; /* 关键：强制内容水平居中 */
+  padding: 10px 0 80px 0;
 }
 
 .content-wrapper {
-  width: 94%; /* 移动端占满 94% 宽度，左右留一点点呼吸感 */
-  max-width: 1200px; /* PC端限制最大宽度 */
-  flex: 1;
-  background: rgba(255, 255, 255, 0.8);
+  /* 移动端分辨率固定感：占满 95% 宽度，两侧对等留白 */
+  width: 95% !important; 
+  max-width: 1200px;
+  background: rgba(255, 255, 255, 0.82);
   backdrop-filter: blur(15px);
   border-radius: 12px;
   padding: 15px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden; /* 关键：防止内部内容撑破容器 */
+  overflow: hidden; /* 禁止卡片本身被撑大 */
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
 }
 
-/* --- 5. 解决表格无法展示完全的问题 --- */
-/* 当表格太宽时，允许在卡片内部左右拖动，而不是整个页面拖动 */
+/* 4. 表格局部滑动：解决内容显示不全 */
 .el-table {
   width: 100% !important;
 }
-
+/* 强制表格在卡片内部开启横向拖动 */
 .el-table__inner-wrapper {
   overflow-x: auto !important; 
 }
 
-/* --- 6. 响应式显示切换 --- */
+/* 5. 移动端 UI 细节微调 */
 @media (max-width: 768px) {
-  .pc-only {
-    display: none !important;
-  }
+  .pc-only { display: none !important; }
   
-  .app-container {
-    background-attachment: scroll; /* 移动端背景不固定，更顺滑 */
-  }
-
-  /* 调整标题在移动端的比例 */
-  .content-wrapper h1 {
-    font-size: 1.2rem !important;
-    text-align: center;
+  .app-header { height: 44px !important; } /* 缩小头部高度 */
+  .logo h1 { font-size: 14px !important; }
+  
+  /* 修复截图中的按钮挤压，让文字不换行，支持向左拖动查看 */
+  .el-table .cell {
+    white-space: nowrap !important;
   }
 }
 
-/* --- 7. 移动端底部 TabBar (始终显示) --- */
+/* 6. 底部导航栏置顶显示 */
 .mobile-tab-bar {
-  display: flex;
   position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  bottom: 0; left: 0; right: 0;
   height: 60px;
+  z-index: 9999;
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
-  border-top: 1px solid rgba(0,0,0,0.05);
-  z-index: 2000;
-  padding-bottom: env(safe-area-inset-bottom);
-}
-
-.tab-item {
-  flex: 1;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: #909399;
-  font-size: 11px;
-}
-
-.tab-item .el-icon {
-  font-size: 20px;
-  margin-bottom: 2px;
-}
-
-.tab-item.active {
-  color: #1890ff;
-  font-weight: bold;
-}
-
-@media (min-width: 769px) {
-  .mobile-tab-bar {
-    display: none !important; /* PC端隐藏底部导航 */
-  }
+  border-top: 1px solid #eee;
 }
 </style>
