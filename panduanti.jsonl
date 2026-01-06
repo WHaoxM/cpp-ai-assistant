@@ -1,0 +1,117 @@
+{"id": 401, "type": "judgment", "question": "使用模板可以减少重复劳动,提高代码重用率.", "answer": "对", "explanation": "模板提供了一种通用的编程机制，可以编写与类型无关的代码，从而提高代码复用性。", "knowledge_point": "模板的作用", "difficulty": "easy"}
+{"id": 402, "type": "judgment", "question": "类模板可以生成若干个模板类,每个模板类又可定义若干个对象.", "answer": "对", "explanation": "类模板是模板，用具体类型实例化后生成模板类，模板类可以创建多个对象。", "knowledge_point": "类模板", "difficulty": "easy"}
+{"id": 403, "type": "judgment", "question": "一个函数模板只生成一个模板函数.", "answer": "错", "explanation": "函数模板根据不同的类型参数实例化生成多个模板函数。", "knowledge_point": "函数模板实例化", "difficulty": "easy"}
+{"id": 404, "type": "judgment", "question": "函数模板中模板参数只能有一个.", "answer": "错", "explanation": "函数模板可以有多个模板参数，例如 template <typename T1, typename T2>。", "knowledge_point": "函数模板参数", "difficulty": "easy"}
+{"id": 405, "type": "judgment", "question": "C++语言中模板分为函数模板和类模板两种.", "answer": "对", "explanation": "C++模板主要包括函数模板和类模板。", "knowledge_point": "模板分类", "difficulty": "easy"}
+{"id": 406, "type": "judgment", "question": "运算符重载的形式有两种:成员函数形式和友元形式.", "answer": "对", "explanation": "运算符重载可以作为类的成员函数或友元函数实现。", "knowledge_point": "运算符重载形式", "difficulty": "easy"}
+{"id": 407, "type": "judgment", "question": "具有纯虚函数的类是抽象类,它的特点是不可以定义对象.", "answer": "对", "explanation": "抽象类不能实例化对象。", "knowledge_point": "抽象类", "difficulty": "easy"}
+{"id": 408, "type": "judgment", "question": "构造函数说明为纯虚函数是没有意义的.", "answer": "对", "explanation": "构造函数不能是虚函数，更不能是纯虚函数。", "knowledge_point": "构造函数与虚函数", "difficulty": "easy"}
+{"id": 409, "type": "judgment", "question": "运算符重载实际上是对已有的运算符重新定义其功能.", "answer": "对", "explanation": "运算符重载赋予已有运算符新的功能，但保持原有语法。", "knowledge_point": "运算符重载本质", "difficulty": "easy"}
+{"id": 410, "type": "judgment", "question": "纯虚函数是一种特殊的成员函数,它是一种没有具体实现的虚函数.", "answer": "对", "explanation": "纯虚函数在基类中声明但不定义，要求派生类必须实现。", "knowledge_point": "纯虚函数", "difficulty": "easy"}
+{"id": 411, "type": "judgment", "question": "使用模板可以减少重复劳动,提高代码重用率.", "answer": "对", "explanation": "同401。", "knowledge_point": "模板的作用", "difficulty": "easy"}
+{"id": 412, "type": "judgment", "question": "类模板可以生成若干个模板类,每个模板类又可定义若干个对象.", "answer": "对", "explanation": "同402。", "knowledge_point": "类模板", "difficulty": "easy"}
+{"id": 413, "type": "judgment", "question": "一个函数模板只生成一个模板函数.", "answer": "错", "explanation": "同403。", "knowledge_point": "函数模板实例化", "difficulty": "easy"}
+{"id": 414, "type": "judgment", "question": "函数模板中模板参数只能有一个.", "answer": "错", "explanation": "同404。", "knowledge_point": "函数模板参数", "difficulty": "easy"}
+{"id": 415, "type": "judgment", "question": "C++语言中模板分为函数模板和类模板两种.", "answer": "对", "explanation": "同405。", "knowledge_point": "模板分类", "difficulty": "easy"}
+{"id": 416, "type": "judgment", "question": "运算符重载的形式有两种:成员函数形式和友元形式.", "answer": "对", "explanation": "同406。", "knowledge_point": "运算符重载形式", "difficulty": "easy"}
+{"id": 417, "type": "judgment", "question": "具有纯虚函数的类是抽象类,它的特点是不可以定义对象.", "answer": "对", "explanation": "同407。", "knowledge_point": "抽象类", "difficulty": "easy"}
+{"id": 418, "type": "judgment", "question": "构造函数说明为纯虚函数是没有意义的.", "answer": "对", "explanation": "同408。", "knowledge_point": "构造函数与虚函数", "difficulty": "easy"}
+{"id": 419, "type": "judgment", "question": "运算符重载实际上是对已有的运算符重新定义其功能.", "answer": "对", "explanation": "同409。", "knowledge_point": "运算符重载本质", "difficulty": "easy"}
+{"id": 420, "type": "judgment", "question": "纯虚函数是一种特殊的成员函数,它是一种没有具体实现的虚函数.", "answer": "对", "explanation": "同410。", "knowledge_point": "纯虚函数", "difficulty": "easy"}
+{"id": 421, "type": "judgment", "question": "构造函数可以被继承.", "answer": "错", "explanation": "构造函数不能被继承，每个类需要定义自己的构造函数。", "knowledge_point": "构造函数继承", "difficulty": "easy"}
+{"id": 422, "type": "judgment", "question": "派生类初始化列表中，可以使用“基类名(派生类对象)”这种形式调用基类复制构造函数，完成对派生类中基类定义成员的初始化构造。", "answer": "对", "explanation": "派生类构造函数的初始化列表中可以调用基类的复制构造函数，用派生类对象初始化基类部分。", "knowledge_point": "派生类构造初始化", "difficulty": "medium"}
+{"id": 423, "type": "judgment", "question": "在私有继承中,基类中所有成员对派生类的对象都是不可见的.", "answer": "对", "explanation": "私有继承下，基类的所有成员在派生类中都变为private，派生类对象无法直接访问。", "knowledge_point": "私有继承访问", "difficulty": "easy"}
+{"id": 424, "type": "judgment", "question": "派生类的析构函数中不需要显式的调用基类的析构函数，基类的析构函数将在派生类析构函数执行完后执行。", "answer": "错", "explanation": "析构函数调用顺序与构造函数相反：先执行派生类析构函数，然后自动调用基类析构函数，不需要显式调用。但题目说“基类的析构函数将在派生类析构函数执行完后执行”，这是正确的，然而前面说“不需要显式的调用”也是正确的，但整个句子可能引起误解。实际上基类析构函数自动调用，顺序正确。", "knowledge_point": "析构函数调用顺序", "difficulty": "medium"}
+{"id": 425, "type": "judgment", "question": "派生类中至少包含了它的所有基类的成员,在这些成员中可能有的是不可访问.", "answer": "对", "explanation": "派生类继承基类所有成员，但访问权限受继承方式影响，可能某些成员不可访问。", "knowledge_point": "派生类成员", "difficulty": "easy"}
+{"id": 426, "type": "judgment", "question": "派生类是从基类派生出来,它不能再生成新的派生类.", "answer": "错", "explanation": "派生类可以继续作为基类派生新的类。", "knowledge_point": "继承层次", "difficulty": "easy"}
+{"id": 427, "type": "judgment", "question": "解决多继承情况下出现的二义性的方法之一是使用成员名限定法.", "answer": "对", "explanation": "使用作用域解析运算符指定成员所属的基类可以解决二义性。", "knowledge_point": "多继承二义性", "difficulty": "easy"}
+{"id": 428, "type": "judgment", "question": "派生类的继承方式中只有两种:公有继承和私有继承.", "answer": "错", "explanation": "继承方式有三种：public、protected、private。", "knowledge_point": "继承方式", "difficulty": "easy"}
+{"id": 429, "type": "judgment", "question": "对初始化列表中的成员进行初始化时，将按照他们在初始化列表中的顺序进行，而并非被继承时从左向右声明的顺序。", "answer": "错", "explanation": "初始化顺序取决于成员在类中声明的顺序，而不是初始化列表中的顺序。", "knowledge_point": "初始化列表顺序", "difficulty": "medium"}
+{"id": 430, "type": "judgment", "question": "在私有继承中,基类中只有公有成员对派生类是可见的.", "answer": "错", "explanation": "私有继承下，基类的public和protected成员在派生类中变为private，对派生类可见，但对派生类对象不可见。", "knowledge_point": "私有继承可见性", "difficulty": "medium"}
+{"id": 431, "type": "judgment", "question": "C++语言中,既允许单继承,又允许多继承.", "answer": "对", "explanation": "C++支持单继承和多继承。", "knowledge_point": "继承类型", "difficulty": "easy"}
+{"id": 432, "type": "judgment", "question": "在保护继承中,对于派生类的访问同于公有继承,而对于派生类的对象的访问同于私有继承.", "answer": "对", "explanation": "保护继承下，基类的public和protected成员在派生类中变为protected，派生类内部可访问（类似public继承），派生类对象不能访问基类任何成员（类似private继承）。", "knowledge_point": "保护继承", "difficulty": "medium"}
+{"id": 433, "type": "judgment", "question": "析构函数不能被继承.", "answer": "对", "explanation": "析构函数不能被继承，每个类有自己的析构函数。", "knowledge_point": "析构函数继承", "difficulty": "easy"}
+{"id": 434, "type": "judgment", "question": "多继承情况下,派生类的构造函数中基类构造函数的执行顺序取决于定义派生类时所指定的各基类的顺序.", "answer": "对", "explanation": "多继承中，基类构造函数执行顺序按照派生类定义时基类出现的顺序。", "knowledge_point": "多继承构造顺序", "difficulty": "easy"}
+{"id": 435, "type": "judgment", "question": "在公有继承中,基类中的公有成员和私有成员在派生类中都是可见的.", "answer": "错", "explanation": "公有继承下，基类的public成员在派生类中为public，protected成员为protected，private成员不可见。", "knowledge_point": "公有继承可见性", "difficulty": "easy"}
+{"id": 436, "type": "judgment", "question": "使用模板可以减少重复劳动,提高代码重用率.", "answer": "对", "explanation": "同401。", "knowledge_point": "模板的作用", "difficulty": "easy"}
+{"id": 437, "type": "judgment", "question": "类模板可以生成若干个模板类,每个模板类又可定义若干个对象.", "answer": "对", "explanation": "同402。", "knowledge_point": "类模板", "difficulty": "easy"}
+{"id": 438, "type": "judgment", "question": "一个函数模板只生成一个模板函数.", "answer": "错", "explanation": "同403。", "knowledge_point": "函数模板实例化", "difficulty": "easy"}
+{"id": 439, "type": "judgment", "question": "函数模板中模板参数只能有一个.", "answer": "错", "explanation": "同404。", "knowledge_point": "函数模板参数", "difficulty": "easy"}
+{"id": 440, "type": "judgment", "question": "C++语言中模板分为函数模板和类模板两种.", "answer": "对", "explanation": "同405。", "knowledge_point": "模板分类", "difficulty": "easy"}
+{"id": 441, "type": "judgment", "question": "运算符重载的形式有两种:成员函数形式和友元形式.", "answer": "对", "explanation": "同406。", "knowledge_point": "运算符重载形式", "difficulty": "easy"}
+{"id": 442, "type": "judgment", "question": "具有纯虚函数的类是抽象类,它的特点是不可以定义对象.", "answer": "对", "explanation": "同407。", "knowledge_point": "抽象类", "difficulty": "easy"}
+{"id": 443, "type": "judgment", "question": "构造函数说明为纯虚函数是没有意义的.", "answer": "对", "explanation": "同408。", "knowledge_point": "构造函数与虚函数", "difficulty": "easy"}
+{"id": 444, "type": "judgment", "question": "运算符重载实际上是对已有的运算符重新定义其功能.", "answer": "对", "explanation": "同409。", "knowledge_point": "运算符重载本质", "difficulty": "easy"}
+{"id": 445, "type": "judgment", "question": "纯虚函数是一种特殊的成员函数,它是一种没有具体实现的虚函数.", "answer": "对", "explanation": "同410。", "knowledge_point": "纯虚函数", "difficulty": "easy"}
+{"id": 446, "type": "judgment", "question": "构造函数可以被继承.", "answer": "错", "explanation": "同421。", "knowledge_point": "构造函数继承", "difficulty": "easy"}
+{"id": 447, "type": "judgment", "question": "派生类初始化列表中，可以使用“基类名(派生类对象)”这种形式调用基类复制构造函数，完成对派生类中基类定义成员的初始化构造。", "answer": "对", "explanation": "同422。", "knowledge_point": "派生类构造初始化", "difficulty": "medium"}
+{"id": 448, "type": "judgment", "question": "在私有继承中,基类中所有成员对派生类的对象都是不可见的.", "answer": "对", "explanation": "同423。", "knowledge_point": "私有继承访问", "difficulty": "easy"}
+{"id": 449, "type": "judgment", "question": "派生类的析构函数中不需要显式的调用基类的析构函数，基类的析构函数将在派生类析构函数执行完后执行。", "answer": "对", "explanation": "析构顺序：先执行派生类析构函数体，然后自动调用基类析构函数，不需要显式调用。", "knowledge_point": "析构函数调用顺序", "difficulty": "medium"}
+{"id": 450, "type": "judgment", "question": "派生类中至少包含了它的所有基类的成员,在这些成员中可能有的是不可访问.", "answer": "对", "explanation": "同425。", "knowledge_point": "派生类成员", "difficulty": "easy"}
+{"id": 451, "type": "judgment", "question": "派生类是从基类派生出来,它不能再生成新的派生类.", "answer": "错", "explanation": "同426。", "knowledge_point": "继承层次", "difficulty": "easy"}
+{"id": 452, "type": "judgment", "question": "解决多继承情况下出现的二义性的方法之一是使用成员名限定法.", "answer": "对", "explanation": "同427。", "knowledge_point": "多继承二义性", "difficulty": "easy"}
+{"id": 453, "type": "judgment", "question": "派生类的继承方式中只有两种:公有继承和私有继承.", "answer": "错", "explanation": "同428。", "knowledge_point": "继承方式", "difficulty": "easy"}
+{"id": 454, "type": "judgment", "question": "对初始化列表中的成员进行初始化时，将按照他们在初始化列表中的顺序进行，而并非被继承时从左向右声明的顺序。", "answer": "错", "explanation": "同429。", "knowledge_point": "初始化列表顺序", "difficulty": "medium"}
+{"id": 455, "type": "judgment", "question": "在私有继承中,基类中只有公有成员对派生类是可见的.", "answer": "错", "explanation": "同430。", "knowledge_point": "私有继承可见性", "difficulty": "medium"}
+{"id": 456, "type": "judgment", "question": "C++语言中,既允许单继承,又允许多继承.", "answer": "对", "explanation": "同431。", "knowledge_point": "继承类型", "difficulty": "easy"}
+{"id": 457, "type": "judgment", "question": "在保护继承中,对于派生类的访问同于公有继承,而对于派生类的对象的访问同于私有继承.", "answer": "对", "explanation": "同432。", "knowledge_point": "保护继承", "difficulty": "medium"}
+{"id": 458, "type": "judgment", "question": "析构函数不能被继承.", "answer": "对", "explanation": "同433。", "knowledge_point": "析构函数继承", "difficulty": "easy"}
+{"id": 459, "type": "judgment", "question": "多继承情况下,派生类的构造函数中基类构造函数的执行顺序取决于定义派生类时所指定的各基类的顺序.", "answer": "对", "explanation": "同434。", "knowledge_point": "多继承构造顺序", "difficulty": "easy"}
+{"id": 460, "type": "judgment", "question": "在公有继承中,基类中的公有成员和私有成员在派生类中都是可见的.", "answer": "错", "explanation": "同435。", "knowledge_point": "公有继承可见性", "difficulty": "easy"}
+{"id": 461, "type": "judgment", "question": "数组赋初值,初始值表中的数据项的数目可以大于或等于数组元素的个数.", "answer": "错", "explanation": "初始化列表项数不能超过数组元素个数，可以少于（剩余元素默认初始化）。", "knowledge_point": "数组初始化", "difficulty": "easy"}
+{"id": 462, "type": "judgment", "question": "对象数组的元素可以是不同类的对象.", "answer": "错", "explanation": "对象数组的所有元素必须是同一类类型。", "knowledge_point": "对象数组", "difficulty": "easy"}
+{"id": 463, "type": "judgment", "question": "C++中数组元素的下标是从0开始,数组元素是连续存储在内存单元中的.", "answer": "对", "explanation": "数组下标从0开始，内存连续分配。", "knowledge_point": "数组特性", "difficulty": "easy"}
+{"id": 464, "type": "judgment", "question": "对象数组的既可以赋初值又可以赋值.", "answer": "对", "explanation": "对象数组可以在定义时初始化，也可以后续赋值。", "knowledge_point": "对象数组操作", "difficulty": "easy"}
+{"id": 465, "type": "judgment", "question": "已知:m是类A的对象,n是类A的公有数据成员,p是指向类A中n成员的指针.下述两种表示是等价的m.n和m.p", "answer": "对", "explanation": "m.p 通过成员指针访问成员，等价于 m.n。", "knowledge_point": "成员指针", "difficulty": "medium"}
+{"id": 466, "type": "judgment", "question": "条件编译命令只在编译时才有作用.", "answer": "对", "explanation": "条件编译是预处理阶段根据条件决定编译哪些代码。", "knowledge_point": "条件编译", "difficulty": "easy"}
+{"id": 467, "type": "judgment", "question": "对象成员的表示与结构变量成员的表示相同,使用运算符.或->.", "answer": "对", "explanation": "对象成员访问使用点运算符或箭头运算符。", "knowledge_point": "对象成员访问", "difficulty": "easy"}
+{"id": 468, "type": "judgment", "question": "静态生存期的标识符的寿命是短的,而动态生存期标识符的寿命是长的.", "answer": "错", "explanation": "静态生存期与程序生命周期相同，动态生存期取决于分配和释放。", "knowledge_point": "生存期", "difficulty": "easy"}
+{"id": 469, "type": "judgment", "question": "宏定义命令是以分号结束的.", "answer": "错", "explanation": "宏定义不以分号结束，分号会成为宏替换的一部分。", "knowledge_point": "宏定义", "difficulty": "easy"}
+{"id": 470, "type": "judgment", "question": "预处理命令是在进行编译时首先执行的,然后再进行正常编译.", "answer": "对", "explanation": "预处理在编译之前执行。", "knowledge_point": "预处理", "difficulty": "easy"}
+{"id": 471, "type": "judgment", "question": "C++语言允许使用友元,但是友元会破坏封装性.", "answer": "对", "explanation": "友元提供了访问私有成员的途径，但破坏了封装性。", "knowledge_point": "友元", "difficulty": "easy"}
+{"id": 472, "type": "judgment", "question": "静态类标识符在它的作用域之外是不存在的.", "answer": "错", "explanation": "静态局部变量在作用域外不可见，但生命周期持续到程序结束。", "knowledge_point": "静态变量", "difficulty": "easy"}
+{"id": 473, "type": "judgment", "question": "重新定义的标识符在定义它的区域内是可见的,而与其同名的原标识符在此域内是不可见的.但是,它是存在的.", "answer": "对", "explanation": "内层作用域屏蔽外层同名标识符，但外层标识符仍然存在。", "knowledge_point": "作用域屏蔽", "difficulty": "easy"}
+{"id": 474, "type": "judgment", "question": "可以在类的构造函数中对静态数据成员进行初始化.", "answer": "错", "explanation": "静态数据成员必须在类外定义和初始化，不能在构造函数内初始化。", "knowledge_point": "静态成员初始化", "difficulty": "easy"}
+{"id": 475, "type": "judgment", "question": "析构函数是一种函数体为空的成员函数.", "answer": "错", "explanation": "析构函数可以有函数体，用于释放资源。", "knowledge_point": "析构函数", "difficulty": "easy"}
+{"id": 476, "type": "judgment", "question": "前向引用声明某个类后，可在之后的其他类的成员函数中将该类作为参数类型使用。", "answer": "对", "explanation": "前向声明允许在定义之前引用类名，可以用于指针、引用或函数参数声明。", "knowledge_point": "前向声明", "difficulty": "medium"}
+{"id": 477, "type": "judgment", "question": "所谓私有成员是指只有类中所提供的成员函数才能直接使用它们任何类以外的函数（除友员函数之外）对它们的访问都是非法的.", "answer": "对", "explanation": "私有成员只能被本类的成员函数和友元访问。", "knowledge_point": "私有成员", "difficulty": "easy"}
+{"id": 478, "type": "judgment", "question": "可以向析构函数中传入参数以完成对象被删除前的一些清理工作。", "answer": "错", "explanation": "析构函数没有参数，不能传入参数。", "knowledge_point": "析构函数参数", "difficulty": "easy"}
+{"id": 479, "type": "judgment", "question": "使用关键字class定义的类中默认的访问权限是私有(private)的.", "answer": "对", "explanation": "class默认成员为private，struct默认成员为public。", "knowledge_point": "类默认访问权限", "difficulty": "easy"}
+{"id": 480, "type": "judgment", "question": "抽象使得协同工作的开发人员可以更多地关注他人的代码功能而非代码实现。", "answer": "对", "explanation": "抽象隐藏实现细节，提供接口，便于协作。", "knowledge_point": "抽象", "difficulty": "easy"}
+{"id": 481, "type": "judgment", "question": "构造函数和析构函数都不能重载.", "answer": "错", "explanation": "构造函数可以重载，析构函数不能重载（只有一个）。", "knowledge_point": "构造函数重载", "difficulty": "easy"}
+{"id": 482, "type": "judgment", "question": "定义对象时,类名前面不需要加class关键字.", "answer": "对", "explanation": "定义对象直接使用类名，不需要加class。", "knowledge_point": "对象定义", "difficulty": "easy"}
+{"id": 483, "type": "judgment", "question": "重载函数可以带默认值参数,但要注意二义性.", "answer": "对", "explanation": "默认参数可能导致函数调用二义性。", "knowledge_point": "重载与默认参数", "difficulty": "easy"}
+{"id": 484, "type": "judgment", "question": "使用内联函数是以增大空间开销为代价的.", "answer": "对", "explanation": "内联函数在调用处展开代码，增加空间开销，减少调用开销。", "knowledge_point": "内联函数代价", "difficulty": "easy"}
+{"id": 485, "type": "judgment", "question": "在C++语言中,所有函数在调用前都要说明.", "answer": "错", "explanation": "如果函数定义在调用之前，则不需要声明。", "knowledge_point": "函数声明", "difficulty": "easy"}
+{"id": 486, "type": "judgment", "question": "在C++语言中,说明函数时要用函数原型,即定义函数时的函数头部分.", "answer": "对", "explanation": "函数原型即函数声明，包括返回类型、函数名和参数列表。", "knowledge_point": "函数原型", "difficulty": "easy"}
+{"id": 487, "type": "judgment", "question": "函数形参的作用域是该函数的函数体.", "answer": "对", "explanation": "形参作用域始于函数体开始，结束于函数体结束。", "knowledge_point": "形参作用域", "difficulty": "easy"}
+{"id": 488, "type": "judgment", "question": "函数的参数个数和类型都相同,返回值不同,这些函数是重载函数.", "answer": "错", "explanation": "仅返回值不同不能构成重载，会导致编译错误。", "knowledge_point": "函数重载条件", "difficulty": "easy"}
+{"id": 489, "type": "judgment", "question": "函数的定义不可以嵌套", "answer": "对", "explanation": "C++不允许在函数内部定义另一个函数（除了lambda）。", "knowledge_point": "函数嵌套定义", "difficulty": "easy"}
+{"id": 490, "type": "judgment", "question": "在C++语言中,传地址调用将被引用调用所替代.", "answer": "错", "explanation": "传地址（指针）和引用调用是两种不同的机制，各有用途，并非替代关系。", "knowledge_point": "参数传递", "difficulty": "easy"}
+{"id": 491, "type": "judgment", "question": "如果一个函数没有返回值,定义时需用void 说明.", "answer": "对", "explanation": "无返回值函数返回类型为void。", "knowledge_point": "void函数", "difficulty": "easy"}
+{"id": 492, "type": "judgment", "question": "在C++语言中,定义函数时必须给出函数的类型.", "answer": "对", "explanation": "函数必须指定返回类型，不能省略。", "knowledge_point": "函数类型", "difficulty": "easy"}
+{"id": 493, "type": "judgment", "question": "返回值类型、参数个数、类型和顺序都相同的函数也可以重载.", "answer": "错", "explanation": "完全相同的函数签名不能重载。", "knowledge_point": "函数重载", "difficulty": "easy"}
+{"id": 494, "type": "judgment", "question": "在设置了参数默认值后,调用函数的对应实参就必须省略.", "answer": "错", "explanation": "可以省略有默认值的实参，也可以显式提供。", "knowledge_point": "默认参数调用", "difficulty": "easy"}
+{"id": 495, "type": "judgment", "question": "引用是某个变量的别名.对引用的操作,实质上就是对被引用的变量的操作.", "answer": "对", "explanation": "引用是变量的别名，操作引用即操作原变量。", "knowledge_point": "引用本质", "difficulty": "easy"}
+{"id": 496, "type": "judgment", "question": "switch语句中的default 关键字,只能放在该语句的末尾,不能放在开头或中间.", "answer": "错", "explanation": "default可以放在switch语句的任何位置，但通常放在末尾。", "knowledge_point": "switch default", "difficulty": "easy"}
+{"id": 497, "type": "judgment", "question": "无名结构是不允许定义结构变量的.", "answer": "错", "explanation": "无名结构（匿名结构）可以定义变量，但较少使用。", "knowledge_point": "无名结构", "difficulty": "medium"}
+{"id": 498, "type": "judgment", "question": "C++语言中不允许使用宏定义方法定义符号常量,只能用关键字const 来定义符号常量.", "answer": "错", "explanation": "可以使用宏定义常量，但推荐使用const。", "knowledge_point": "常量定义", "difficulty": "easy"}
+{"id": 499, "type": "judgment", "question": "while 循环语句的循环体至少执行一次.", "answer": "错", "explanation": "while循环可能一次都不执行（条件初始为假）。", "knowledge_point": "while循环", "difficulty": "easy"}
+{"id": 500, "type": "judgment", "question": "C++程序中,每条语句结束时都加一个分号(;).", "answer": "对", "explanation": "语句以分号结束。", "knowledge_point": "语句结束符", "difficulty": "easy"}
+{"id": 501, "type": "judgment", "question": "枚举变量的取值受到该枚举变量所对应的枚举表中枚举符的局限.", "answer": "对", "explanation": "枚举变量的值只能是枚举表中定义的枚举常量之一。", "knowledge_point": "枚举类型", "difficulty": "easy"}
+{"id": 502, "type": "judgment", "question": "为了减轻使用者的负担,与C 语言相比,C++语言中减少了一些运算符.", "answer": "错", "explanation": "C++增加了运算符（如new、delete、::、.*等），并没有减少。", "knowledge_point": "C++运算符", "difficulty": "easy"}
+{"id": 503, "type": "judgment", "question": "使用(<<)可以输出各种类型的变量的值,也可以输出指针值.", "answer": "对", "explanation": "<<运算符可以输出内置类型、自定义类型（通过重载）和指针（输出地址）。", "knowledge_point": "输出运算符", "difficulty": "easy"}
+{"id": 504, "type": "judgment", "question": "C++的程序中,对变量一定要先说明再使用,说明只要在使用之前就可以.", "answer": "对", "explanation": "变量必须先声明后使用，声明位置在使用之前即可。", "knowledge_point": "变量声明", "difficulty": "easy"}
+{"id": 505, "type": "judgment", "question": "同一结构的不同成员占用不同的内存单元.", "answer": "对", "explanation": "结构体成员在内存中依次排列，占用不同单元。", "knowledge_point": "结构体内存", "difficulty": "easy"}
+{"id": 506, "type": "judgment", "question": "作用域运算符(::)只能用来限定成员函数所属的类.", "answer": "错", "explanation": "作用域运算符还用于访问全局变量、命名空间等。", "knowledge_point": "作用域运算符", "difficulty": "easy"}
+{"id": 507, "type": "judgment", "question": "调用系统函数时,要先将该系统函数的原型说明所在的头文件包含进去.", "answer": "对", "explanation": "包含头文件以获取函数声明。", "knowledge_point": "系统函数调用", "difficulty": "easy"}
+{"id": 508, "type": "judgment", "question": "C++语言中使用了新的注释符(//), C 语言中注释符(/* … / )不能在C++语言中使用.", "answer": "错", "explanation": "C++兼容C的/ */注释。", "knowledge_point": "注释符", "difficulty": "easy"}
+{"id": 509, "type": "judgment", "question": "C++语言中标识符内的大小写字母是没有区别的.", "answer": "错", "explanation": "C++区分大小写。", "knowledge_point": "标识符大小写", "difficulty": "easy"}
+{"id": 510, "type": "judgment", "question": "continue 语句只能出现在循环体中.", "answer": "对", "explanation": "continue用于跳过本次循环剩余部分，只能在循环中使用。", "knowledge_point": "continue语句", "difficulty": "easy"}
+{"id": 511, "type": "judgment", "question": "switch 语句中必须有break 语句,否则无法退出switch 语句.", "answer": "错", "explanation": "break不是必须的，没有break会继续执行下一个case（穿透）。", "knowledge_point": "switch语句", "difficulty": "easy"}
+{"id": 512, "type": "judgment", "question": "条件语句不能作为多路分支语句.", "answer": "错", "explanation": "if-else if-else可以实现多路分支。", "knowledge_point": "条件语句", "difficulty": "easy"}
+{"id": 513, "type": "judgment", "question": "C++语言是一种以编译方式实现的高级语言.", "answer": "对", "explanation": "C++是编译型语言。", "knowledge_point": "C++语言类型", "difficulty": "easy"}
+{"id": 514, "type": "judgment", "question": "在C++程序编译过程中,包含预处理过程、编译过程和连接过程,并且这三个过程的顺序是不能改变的。", "answer": "对", "explanation": "编译过程通常顺序为：预处理 -> 编译 -> 链接。", "knowledge_point": "编译过程", "difficulty": "easy"}
+{"id": 515, "type": "judgment", "question": "在C++程序编译过程中,包含预处理过程、编译过程和连接过程,并且这三个过程的顺序是不能改变的.", "answer": "对", "explanation": "同514。", "knowledge_point": "编译过程", "difficulty": "easy"}
+{"id": 516, "type": "judgment", "question": "计算机最小的存储单位是bit。", "answer": "对", "explanation": "位（bit）是计算机最小存储单位。", "knowledge_point": "存储单位", "difficulty": "easy"}
+{"id": 517, "type": "judgment", "question": "C++语言是一种以解释方式实现的高级语言。", "answer": "错", "explanation": "C++是编译型，不是解释型。", "knowledge_point": "C++语言类型", "difficulty": "easy"}
