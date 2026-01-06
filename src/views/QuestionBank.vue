@@ -1,57 +1,47 @@
 <template>
   <div class="page-container">
-    <div class="search-section">
-      <el-row :gutter="10" class="mobile-search-row">
-        <el-col :xs="14" :sm="10">
+    <div class="filter-card">
+      <el-row :gutter="15" class="responsive-row">
+        <el-col :xs="24" :sm="8" class="col-item">
           <el-input v-model="searchQuery" placeholder="搜索题目..." prefix-icon="Search" clearable />
         </el-col>
-        <el-col :xs="10" :sm="6">
-          <el-select v-model="typeFilter" placeholder="类型" clearable>
+        
+        <el-col :xs="24" :sm="6" class="col-item">
+          <el-select v-model="typeFilter" placeholder="选择题目类型" clearable style="width: 100%">
             <el-option label="单选题" value="single" />
             <el-option label="多选题" value="multiple" />
           </el-select>
         </el-col>
+
+        <el-col :xs="24" :sm="10" class="col-item btn-group">
+          <el-button type="primary" icon="Upload" @click="handleImport" class="flex-btn">导入题目</el-button>
+          <el-button type="danger" icon="Delete" @click="handleClear" class="flex-btn">清空数据</el-button>
+        </el-col>
       </el-row>
-      
-      <div class="action-buttons pc-only">
-        <el-button type="primary" icon="Plus">导入题目</el-button>
-        <el-button type="danger" icon="Delete">清空数据</el-button>
-      </div>
     </div>
 
-    <div class="table-card">
-      <el-table :data="pagedData" style="width: 100%" row-key="id">
-        <el-table-column type="expand" width="40">
+    <div class="table-container">
+      <el-table :data="tableData" style="width: 100%" row-key="id">
+        <el-table-column type="expand" class="mobile-only-expand">
           <template #default="props">
-            <div class="expand-detail">
-              <p><span>知识点：</span> {{ props.row.knowledge }}</p>
-              <p><span>难度：</span> <el-tag size="small">{{ props.row.difficulty }}</el-tag></p>
-              <p><span>题目描述：</span> {{ props.row.desc }}</p>
-              <div class="mobile-actions">
-                <el-button size="small" type="primary" plain @click="handleEdit(props.row)">编辑</el-button>
-                <el-button size="small" type="warning" plain @click="handleAI(props.row)">AI分析</el-button>
-              </div>
+            <div class="detail-box">
+              <p><b>知识点:</b> {{ props.row.knowledge }}</p>
+              <p><b>难度:</b> {{ props.row.difficulty }}</p>
             </div>
           </template>
         </el-table-column>
 
-        <el-table-column prop="id" label="ID" width="60" />
-        <el-table-column prop="title" label="题目名称" min-width="180" show-overflow-tooltip />
+        <el-table-column prop="id" label="ID" width="70" />
+        <el-table-column prop="title" label="题目名称" min-width="150" show-overflow-tooltip />
         
-        <el-table-column prop="type" label="类型" class-name="hidden-xs" width="100" />
-        <el-table-column prop="difficulty" label="难度" class-name="hidden-xs" width="100" />
-
-        <el-table-column label="操作" width="120" fixed="right">
+        <el-table-column prop="type" label="类型" class-name="pc-column" width="100" />
+        
+        <el-table-column label="操作" width="100" fixed="right">
           <template #default="scope">
-            <el-button link type="primary" @click="handleDetail(scope.row)">详情</el-button>
-            <el-button link type="warning" class="hidden-xs" @click="handleAI(scope.row)">AI</el-button>
+            <el-button link type="primary" @click="goDetail(scope.row)">详情</el-button>
           </template>
         </el-table-column>
       </el-table>
-      
-      <div class="pagination-container">
-        <el-pagination layout="prev, pager, next" :total="total" small />
-      </div>
     </div>
   </div>
 </template>
@@ -201,65 +191,63 @@ export default {
 </script>
 
 <style scoped>
-/* 小程序级优化：去除多余标题，直接进入功能区 */
 .page-container {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 20px;
 }
 
-/* 搜索区毛玻璃感 */
-.search-section {
-  padding: 15px;
-  background: rgba(255, 255, 255, 0.5);
+/* 搜索和按钮容器 */
+.filter-card {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  padding: 20px;
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-.table-card {
-  background: transparent;
+.col-item {
+  margin-bottom: 15px;
+}
+
+.btn-group {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end; /* PC端靠右 */
+}
+
+.flex-btn {
+  flex: 1; /* 移动端平分宽度 */
+  max-width: 150px;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .btn-group {
+    justify-content: center; /* 移动端居中 */
+    margin-top: 5px;
+  }
+  
+  .flex-btn {
+    max-width: none; /* 移动端取消最大宽度限制 */
+  }
+
+  /* 隐藏PC端的列 */
+  :deep(.pc-column) {
+    display: none !important;
+  }
+}
+
+.table-container {
+  background: rgba(255, 255, 255, 0.8);
   border-radius: 12px;
+  padding: 10px;
   overflow: hidden;
 }
 
-/* 表格收放内容样式 */
-.expand-detail {
-  padding: 15px;
-  background: rgba(240, 245, 255, 0.6);
-  border-radius: 8px;
+.detail-box {
+  padding: 10px 20px;
+  background: #f9f9f9;
   font-size: 13px;
-  line-height: 2;
-}
-.expand-detail span {
-  font-weight: bold;
-  color: #606266;
-}
-
-.mobile-actions {
-  margin-top: 10px;
-  display: flex;
-  gap: 10px;
-}
-
-/* 移动端适配：隐藏多余列，缩小间距 */
-@media (max-width: 768px) {
-  .hidden-xs {
-    display: none !important;
-  }
-  
-  .mobile-search-row {
-    margin-bottom: 0;
-  }
-
-  /* 调整 Element Plus 表格在移动端边距 */
-  :deep(.el-table__cell) {
-    padding: 8px 0 !important;
-  }
-}
-
-.pagination-container {
-  margin-top: 15px;
-  display: flex;
-  justify-content: center;
 }
 </style>
