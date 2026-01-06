@@ -1,82 +1,58 @@
 <template>
-  <div class="question-bank-container">
-    <h1>C++ 题库助手</h1>
-    
-    <el-card shadow="hover" class="filter-card">
-      <el-select v-model="selectedType" placeholder="选择题目类型" style="width: 150px; margin-right: 10px;">
-        <el-option label="全部" value="" />
-        <el-option label="单选题" value="single_choice" />
-        <el-option label="填空题" value="fill_blank" />
-        <el-option label="判断题" value="judgment" />
-        <el-option label="写结果" value="write_result" />
-        <el-option label="写程序" value="write_code" />
-      </el-select>
+  <div class="page-container">
+    <div class="search-section">
+      <el-row :gutter="10" class="mobile-search-row">
+        <el-col :xs="14" :sm="10">
+          <el-input v-model="searchQuery" placeholder="搜索题目..." prefix-icon="Search" clearable />
+        </el-col>
+        <el-col :xs="10" :sm="6">
+          <el-select v-model="typeFilter" placeholder="类型" clearable>
+            <el-option label="单选题" value="single" />
+            <el-option label="多选题" value="multiple" />
+          </el-select>
+        </el-col>
+      </el-row>
       
-      <el-input
-        v-model="searchKeyword"
-        placeholder="搜索题目..."
-        clearable
-        style="width: 300px; margin-right: 10px;"
-      />
-      
-      <el-button type="primary">筛选</el-button>
-      
-      <el-button type="success" @click="handleImportQuestions">
-        <el-icon name="Upload" /> 导入题目
-      </el-button>
-      
-      <el-button type="danger" @click="handleDeleteLastImported">
-        <el-icon name="Delete" /> 删除上次导入
-      </el-button>
-      
-      <!-- 隐藏的文件输入框 -->
-      <input
-        ref="fileInputRef"
-        type="file"
-        accept=".json,.jsonl"
-        style="display: none;"
-        @change="handleFileChange"
-      />
-    </el-card>
-    
-    <el-table :data="filteredQuestions" style="width: 100%; margin-top: 20px;">
-        <el-table-column prop="id" label="题号" width="80" />
-        <el-table-column prop="type" label="类型" width="120">
-          <template #default="scope">
-            <el-tag v-if="scope.row.type === 'single_choice'" type="primary">单选题</el-tag>
-            <el-tag v-else-if="scope.row.type === 'fill_blank'" type="success">填空题</el-tag>
-            <el-tag v-else-if="scope.row.type === 'judgment'" type="warning">判断题</el-tag>
-            <el-tag v-else-if="scope.row.type === 'write_result'" type="info">写结果</el-tag>
-            <el-tag v-else-if="scope.row.type === 'write_code'" type="danger">写程序</el-tag>
+      <div class="action-buttons pc-only">
+        <el-button type="primary" icon="Plus">导入题目</el-button>
+        <el-button type="danger" icon="Delete">清空数据</el-button>
+      </div>
+    </div>
+
+    <div class="table-card">
+      <el-table :data="pagedData" style="width: 100%" row-key="id">
+        <el-table-column type="expand" width="40">
+          <template #default="props">
+            <div class="expand-detail">
+              <p><span>知识点：</span> {{ props.row.knowledge }}</p>
+              <p><span>难度：</span> <el-tag size="small">{{ props.row.difficulty }}</el-tag></p>
+              <p><span>题目描述：</span> {{ props.row.desc }}</p>
+              <div class="mobile-actions">
+                <el-button size="small" type="primary" plain @click="handleEdit(props.row)">编辑</el-button>
+                <el-button size="small" type="warning" plain @click="handleAI(props.row)">AI分析</el-button>
+              </div>
+            </div>
           </template>
         </el-table-column>
-        <el-table-column prop="question" label="题目" :show-overflow-tooltip="true">
+
+        <el-table-column prop="id" label="ID" width="60" />
+        <el-table-column prop="title" label="题目名称" min-width="180" show-overflow-tooltip />
+        
+        <el-table-column prop="type" label="类型" class-name="hidden-xs" width="100" />
+        <el-table-column prop="difficulty" label="难度" class-name="hidden-xs" width="100" />
+
+        <el-table-column label="操作" width="120" fixed="right">
           <template #default="scope">
-            <div class="question-content" v-html="renderText(scope.row.question)"></div>
-          </template>
-        </el-table-column>
-        <el-table-column prop="knowledge_point" label="知识点" width="180" :show-overflow-tooltip="true" />
-        <el-table-column prop="difficulty" label="难度" width="100">
-          <template #default="scope">
-            <el-tag v-if="scope.row.difficulty === 'easy'" type="success" size="small">简单</el-tag>
-            <el-tag v-else-if="scope.row.difficulty === 'medium'" type="warning" size="small">中等</el-tag>
-            <el-tag v-else-if="scope.row.difficulty === 'hard'" type="danger" size="small">困难</el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column label="操作" width="250" fixed="right">
-          <template #default="scope">
-            <el-button type="primary" size="small" @click="viewQuestion(scope.row.id)">
-              查看详情
-            </el-button>
-            <el-button type="warning" size="small" @click="askAIAboutQuestion(scope.row)" style="margin-left: 5px;">
-              <el-icon name="ChatDotRound" /> AI分析
-            </el-button>
-            <el-button type="danger" size="small" @click="handleDeleteQuestion(scope.row.id)" style="margin-left: 5px;">
-              <el-icon name="Delete" /> 删除
-            </el-button>
+            <el-button link type="primary" @click="handleDetail(scope.row)">详情</el-button>
+            <el-button link type="warning" class="hidden-xs" @click="handleAI(scope.row)">AI</el-button>
           </template>
         </el-table-column>
       </el-table>
+      
+      <div class="pagination-container">
+        <el-pagination layout="prev, pager, next" :total="total" small />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -225,20 +201,65 @@ export default {
 </script>
 
 <style scoped>
-.question-bank-container {
-  padding: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
+/* 小程序级优化：去除多余标题，直接进入功能区 */
+.page-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
-.filter-card {
-  margin-bottom: 20px;
+/* 搜索区毛玻璃感 */
+.search-section {
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-.question-content {
-  max-width: 600px;
-  white-space: nowrap;
+.table-card {
+  background: transparent;
+  border-radius: 12px;
   overflow: hidden;
-  text-overflow: ellipsis;
+}
+
+/* 表格收放内容样式 */
+.expand-detail {
+  padding: 15px;
+  background: rgba(240, 245, 255, 0.6);
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 2;
+}
+.expand-detail span {
+  font-weight: bold;
+  color: #606266;
+}
+
+.mobile-actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+/* 移动端适配：隐藏多余列，缩小间距 */
+@media (max-width: 768px) {
+  .hidden-xs {
+    display: none !important;
+  }
+  
+  .mobile-search-row {
+    margin-bottom: 0;
+  }
+
+  /* 调整 Element Plus 表格在移动端边距 */
+  :deep(.el-table__cell) {
+    padding: 8px 0 !important;
+  }
+}
+
+.pagination-container {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
 }
 </style>
