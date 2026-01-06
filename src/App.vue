@@ -117,116 +117,90 @@ export default {
 </script>
 
 <style>
-/* 全局基础重置 */
-body, html {
-  margin: 0; padding: 0;
-  height: 100%; width: 100%;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+/* 1. 彻底锁定全屏，消除默认边距 */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden; /* 防止双滚动条 */
 }
 
 .app-container {
   height: 100vh;
+  width: 100vw;
   display: flex;
   flex-direction: column;
   background-size: cover;
   background-position: center;
-  background-attachment: fixed;
-  transition: background-image 0.5s ease-in-out;
-}
-
-/* 背景蒙版：增加一层微暗磨砂感，提升文字可读性 */
-.app-container::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0, 0, 0, 0.15); 
-  z-index: 0;
-}
-
-/* 主内容区 */
-.app-main {
+  background-repeat: no-repeat;
   position: relative;
-  z-index: 1;
-  flex: 1;
+}
+
+/* 2. 导航栏透明化，与背景融合 */
+.app-header {
+  background: rgba(255, 255, 255, 0.7) !important; /* 半透明 */
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   display: flex;
-  justify-content: center;
-  padding: 20px 15px 80px 15px; /* 底部预留 TabBar 空间 */
-  overflow-y: auto;
+  align-items: center;
+  z-index: 10;
 }
 
+.header-content {
+  width: 95%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+}
+
+.logo h1 {
+  font-size: 1.2rem !important;
+  color: #333;
+  margin-right: 40px;
+}
+
+/* 3. 主区域：垂直居中，且支持内部滚动 */
+.app-main {
+  flex: 1;
+  overflow-y: auto; /* 允许内容过多时滚动 */
+  display: flex;
+  justify-content: center; /* 水平居中 */
+  align-items: flex-start; /* 从顶部开始排列，防止内容被切断 */
+  padding: 40px 15px 100px 15px; /* 底部预留空间给 TabBar */
+}
+
+/* 4. 内容卡片：精致磨砂感 */
 .content-wrapper {
-  width: 100%;
+  width: 100% !important;
   max-width: 1100px;
-  background: rgba(255, 255, 255, 0.88);
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
   border-radius: 16px;
-  padding: 24px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
-  height: fit-content; /* 随内容高度变化 */
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
 }
 
-/* 移动端专属样式 */
+/* 5. 移动端收纳适配 */
 @media (max-width: 768px) {
   .pc-only { display: none !important; }
   
-  .mobile-header {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(10px);
-    font-weight: bold;
-    color: #333;
-    border-bottom: 1px solid rgba(0,0,0,0.05);
+  .app-main {
+    padding: 10px 10px 80px 10px;
   }
-
+  
   .content-wrapper {
     padding: 15px;
-    margin-top: 10px;
+    border-radius: 12px;
   }
 
-  /* 表格收纳优化：允许横向滚动，但不撑破父容器 */
-  .el-table {
-    border-radius: 8px;
+  /* 解决截图里“标题重复”问题：如果是移动端，隐藏卡片内可能存在的重复大标题 */
+  .content-wrapper h1, 
+  .content-wrapper .page-title {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    text-align: center;
   }
-}
-
-/* 底部 TabBar 优化 */
-.mobile-tab-bar {
-  position: fixed;
-  bottom: 0; left: 0; right: 0;
-  height: 65px;
-  background: rgba(255, 255, 255, 0.95);
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  border-top: 1px solid rgba(0,0,0,0.05);
-  padding-bottom: env(safe-area-inset-bottom); /* 适配刘海屏底部 */
-  z-index: 1000;
-}
-
-.tab-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: #909399;
-  font-size: 12px;
-  transition: all 0.3s;
-}
-
-.tab-item.active {
-  color: #409EFF;
-  transform: translateY(-2px);
-}
-
-.tab-item .el-icon {
-  font-size: 24px;
-  margin-bottom: 4px;
 }
 </style>
